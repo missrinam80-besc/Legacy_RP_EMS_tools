@@ -1,18 +1,15 @@
 /**
  * EMS Trauma Rapportgenerator
  * ----------------------------------------
- * Veilige statische versie voor GitHub Pages
- * met localStorage autosave.
- *
- * Geen database, geen backend, geen externe API.
- * Alle data blijft lokaal in de browser van de gebruiker.
+ * Statische versie voor de multi-tool GitHub Pages structuur.
+ * Alle data blijft lokaal in de browser.
  */
 
 let appConfig = null;
 
 /**
- * Unieke sleutel voor lokale opslag in de browser.
- * Pas dit alleen aan als je bewust een nieuwe opslagversie wil starten.
+ * Unieke localStorage-sleutel voor deze tool.
+ * Zo blijft data gescheiden van andere tools.
  */
 const STORAGE_KEY = "ems_tool_trauma_report_v1";
 
@@ -26,26 +23,18 @@ const statusBox = document.getElementById("statusBox");
 const copyBtn = document.getElementById("copyBtn");
 const downloadTxtBtn = document.getElementById("downloadTxtBtn");
 const downloadJsonBtn = document.getElementById("downloadJsonBtn");
+const clearStorageBtn = document.getElementById("clearStorageBtn");
 const resetBtn = document.getElementById("resetBtn");
 const manualRefreshBtn = document.getElementById("manualRefreshBtn");
 
-/**
- * Haal de tekstwaarde op van een veld op basis van ID.
- */
 function getValue(id) {
   return document.getElementById(id)?.value?.trim() || "";
 }
 
-/**
- * Geef alle aangevinkte waardes terug van een checkboxgroep.
- */
 function getChecked(name) {
   return Array.from(document.querySelectorAll(`input[name="${name}"]:checked`)).map((el) => el.value);
 }
 
-/**
- * Formatteer datetime-local naar Belgische datum/tijd.
- */
 function formatDateTime(input) {
   if (!input) return "Niet ingevuld";
 
@@ -61,31 +50,19 @@ function formatDateTime(input) {
   }).format(date).replace(",", "");
 }
 
-/**
- * Ruim overmatige lege lijnen op in de output.
- */
 function clean(text) {
   return text.replace(/\n{3,}/g, "\n\n").trim();
 }
 
-/**
- * Maak een lijst leesbaar.
- */
 function joinList(list) {
   return list.length ? list.join(", ") : "Niet gespecificeerd";
 }
 
-/**
- * Bouw één rapportregel op.
- */
 function line(label, value) {
   const finalValue = value && String(value).trim() ? String(value).trim() : "Niet ingevuld";
   return `${label}: ${finalValue}`;
 }
 
-/**
- * Formatteer geld in euro.
- */
 function formatMoney(value) {
   return new Intl.NumberFormat("nl-BE", {
     style: "currency",
@@ -94,9 +71,6 @@ function formatMoney(value) {
   }).format(value || 0);
 }
 
-/**
- * Toon statusmelding.
- */
 function showStatus(message, type = "ok") {
   statusBox.textContent = message;
   statusBox.classList.remove("hidden", "error");
@@ -106,18 +80,12 @@ function showStatus(message, type = "ok") {
   }
 }
 
-/**
- * Verberg statusmelding.
- */
 function clearStatus() {
   statusBox.classList.add("hidden");
   statusBox.classList.remove("error");
   statusBox.textContent = "";
 }
 
-/**
- * Voeg opties toe aan een <select>.
- */
 function populateSelect(selectId, options) {
   const select = document.getElementById(selectId);
   select.innerHTML = "";
@@ -130,9 +98,6 @@ function populateSelect(selectId, options) {
   });
 }
 
-/**
- * Bouw checkboxen op uit config.json.
- */
 function populateCheckboxGroup(containerId, inputName, values) {
   const container = document.getElementById(containerId);
   container.innerHTML = "";
@@ -152,9 +117,6 @@ function populateCheckboxGroup(containerId, inputName, values) {
   });
 }
 
-/**
- * Bouw basistarieven op uit config.json.
- */
 function populateBaseCosts(costs) {
   const select = document.getElementById("baseCost");
   select.innerHTML = "";
@@ -167,9 +129,6 @@ function populateBaseCosts(costs) {
   });
 }
 
-/**
- * Bouw supplementen dynamisch op uit config.json.
- */
 function populateSupplements(supplements) {
   const container = document.getElementById("supplementsContainer");
   container.innerHTML = "";
@@ -201,9 +160,6 @@ function populateSupplements(supplements) {
   });
 }
 
-/**
- * Bereken MAP en shock index.
- */
 function buildCalculations() {
   const sys = Number(getValue("sys"));
   const dia = Number(getValue("dia"));
@@ -229,9 +185,6 @@ function buildCalculations() {
   };
 }
 
-/**
- * Bereken totale kost.
- */
 function buildCosts() {
   const baseCostSelect = document.getElementById("baseCost");
   const baseCost = Number(baseCostSelect.value || 0);
@@ -267,9 +220,6 @@ function buildCosts() {
   };
 }
 
-/**
- * Bouw het trauma-rapport op.
- */
 function generateReport() {
   const calculations = buildCalculations();
   const costData = buildCosts();
@@ -333,9 +283,6 @@ ${line("Totaal te factureren", formatMoney(costData.total))}
   };
 }
 
-/**
- * Verzamel alle formulierdata.
- */
 function getAllFormData() {
   const result = {};
 
@@ -344,7 +291,6 @@ function getAllFormData() {
   textFields.forEach((field) => {
     if (field.type === "checkbox") return;
     if (!field.id) return;
-
     result[field.id] = field.value;
   });
 
@@ -360,9 +306,6 @@ function getAllFormData() {
   return result;
 }
 
-/**
- * Sla alle formulierdata lokaal op in localStorage.
- */
 function saveToLocalStorage() {
   try {
     const payload = {
@@ -376,9 +319,6 @@ function saveToLocalStorage() {
   }
 }
 
-/**
- * Herstel formulierdata vanuit localStorage.
- */
 function restoreFromLocalStorage() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
@@ -427,9 +367,6 @@ function restoreFromLocalStorage() {
   }
 }
 
-/**
- * Wis lokale opslag van deze tool.
- */
 function clearLocalStorageData() {
   try {
     localStorage.removeItem(STORAGE_KEY);
@@ -438,9 +375,6 @@ function clearLocalStorageData() {
   }
 }
 
-/**
- * Kopieer rapport naar klembord.
- */
 async function copyReport() {
   clearStatus();
   const { reportText } = generateReport();
@@ -453,9 +387,6 @@ async function copyReport() {
   }
 }
 
-/**
- * Download een bestand.
- */
 function downloadFile(filename, content, mimeType) {
   const blob = new Blob([content], { type: mimeType });
   const url = URL.createObjectURL(blob);
@@ -468,9 +399,6 @@ function downloadFile(filename, content, mimeType) {
   URL.revokeObjectURL(url);
 }
 
-/**
- * Download rapport als TXT.
- */
 function downloadTxt() {
   clearStatus();
   const { reportText } = generateReport();
@@ -480,9 +408,6 @@ function downloadTxt() {
   showStatus("TXT-bestand werd gedownload.");
 }
 
-/**
- * Download rapportdata als JSON.
- */
 function downloadJson() {
   clearStatus();
   const { reportText, costData } = generateReport();
@@ -504,9 +429,6 @@ function downloadJson() {
   showStatus("JSON-bestand werd gedownload.");
 }
 
-/**
- * Maak veilige bestandsdatumstring.
- */
 function buildFileTimestamp() {
   const now = new Date();
 
@@ -519,9 +441,6 @@ function buildFileTimestamp() {
   return `${year}${month}${day}-${hour}${minute}`;
 }
 
-/**
- * Zet datum/tijd standaard op nu.
- */
 function setDefaultDateTime() {
   const nowLocal = new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
     .toISOString()
@@ -530,9 +449,11 @@ function setDefaultDateTime() {
   document.getElementById("dateTime").value = nowLocal;
 }
 
-/**
- * Reset volledig formulier en lokale opslag.
- */
+function clearStorageOnly() {
+  clearLocalStorageData();
+  showStatus("Lokale opslag van deze tool werd gewist.");
+}
+
 function resetForm() {
   form.reset();
 
@@ -558,19 +479,11 @@ function resetForm() {
   showStatus("Formulier en lokale opslag werden gereset.");
 }
 
-/**
- * Centrale updatefunctie:
- * - herbouw rapport
- * - sla automatisch lokaal op
- */
 function handleFormUpdate() {
   generateReport();
   saveToLocalStorage();
 }
 
-/**
- * Laad config.json en initialiseer de tool.
- */
 async function initApp() {
   try {
     const response = await fetch("config.json", { cache: "no-store" });
@@ -597,6 +510,7 @@ async function initApp() {
     copyBtn.addEventListener("click", copyReport);
     downloadTxtBtn.addEventListener("click", downloadTxt);
     downloadJsonBtn.addEventListener("click", downloadJson);
+    clearStorageBtn.addEventListener("click", clearStorageOnly);
     resetBtn.addEventListener("click", resetForm);
     manualRefreshBtn.addEventListener("click", generateReport);
 
