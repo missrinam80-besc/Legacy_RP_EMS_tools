@@ -15,19 +15,19 @@
     {
       "id": "hospital_admission",
       "label": "Opname",
-      "price": 1200,
+      "price": 950,
       "types": ["admission"]
     },
     {
       "id": "surgery_room",
       "label": "Gebruik operatiekamer",
-      "price": 1500,
+      "price": 1400,
       "types": ["surgery"]
     },
     {
       "id": "death_case",
       "label": "Doodverklaring / overlijdensdossier",
-      "price": 900,
+      "price": 700,
       "types": ["death"]
     }
   ],
@@ -35,43 +35,55 @@
     {
       "id": "blood_test",
       "label": "Bloedonderzoek",
-      "price": 250,
+      "price": 150,
       "types": ["standard", "emergency", "admission", "surgery"]
     },
     {
-      "id": "dna_test",
-      "label": "DNA-onderzoek",
-      "price": 400,
-      "types": ["emergency", "death"]
-    },
-    {
-      "id": "toxicology",
-      "label": "Toxicologisch onderzoek",
-      "price": 450,
-      "types": ["emergency", "admission", "death"]
+      "id": "urine_test",
+      "label": "Urineonderzoek",
+      "price": 100,
+      "types": ["standard", "admission"]
     },
     {
       "id": "infection_test",
       "label": "Infectie-onderzoek",
-      "price": 300,
+      "price": 180,
       "types": ["standard", "admission", "surgery"]
     },
     {
       "id": "allergy_test",
       "label": "Allergie-onderzoek",
-      "price": 275,
+      "price": 175,
       "types": ["standard", "admission"]
+    },
+    {
+      "id": "dna_test",
+      "label": "DNA-onderzoek",
+      "price": 300,
+      "types": ["emergency", "death"]
+    },
+    {
+      "id": "tox_test",
+      "label": "Toxicologisch onderzoek",
+      "price": 325,
+      "types": ["emergency", "admission", "death"]
     },
     {
       "id": "xray",
       "label": "X-ray",
-      "price": 300,
+      "price": 250,
+      "types": ["emergency", "admission", "surgery"]
+    },
+    {
+      "id": "ct_scan",
+      "label": "CT-scan",
+      "price": 450,
       "types": ["emergency", "admission", "surgery"]
     },
     {
       "id": "mri",
-      "label": "MRI / scan",
-      "price": 650,
+      "label": "MRI-scan",
+      "price": 550,
       "types": ["emergency", "admission", "surgery"]
     }
   ],
@@ -79,55 +91,73 @@
     {
       "id": "wound_care",
       "label": "Wondzorg",
-      "price": 200,
+      "price": 120,
+      "types": ["standard", "emergency", "admission"]
+    },
+    {
+      "id": "bandage",
+      "label": "Verband / drukverband",
+      "price": 90,
       "types": ["standard", "emergency", "admission"]
     },
     {
       "id": "sutures",
       "label": "Hechten",
-      "price": 300,
+      "price": 220,
       "types": ["emergency", "admission"]
     },
     {
-      "id": "bandage",
-      "label": "Verband / drukverband",
-      "price": 120,
-      "types": ["standard", "emergency", "admission"]
+      "id": "burn_care",
+      "label": "Brandwondzorg",
+      "price": 240,
+      "types": ["emergency", "admission"]
     },
     {
       "id": "cast",
       "label": "Gips",
-      "price": 450,
+      "price": 320,
       "types": ["emergency", "admission"]
     },
     {
       "id": "pain_medication",
       "label": "Pijnmedicatie",
-      "price": 150,
+      "price": 90,
       "types": ["standard", "emergency", "admission", "surgery"]
+    },
+    {
+      "id": "antibiotics",
+      "label": "Antibiotica",
+      "price": 110,
+      "types": ["standard", "admission", "surgery"]
     },
     {
       "id": "iv",
       "label": "Infuus",
-      "price": 175,
+      "price": 140,
       "types": ["emergency", "admission", "surgery"]
     },
     {
-      "id": "surgery",
-      "label": "Chirurgische ingreep",
-      "price": 1800,
-      "types": ["surgery"]
+      "id": "sedation",
+      "label": "Sedatie / verdoving",
+      "price": 260,
+      "types": ["surgery", "emergency"]
     },
     {
       "id": "resuscitation",
       "label": "Reanimatie",
-      "price": 1500,
+      "price": 1200,
       "types": ["emergency"]
+    },
+    {
+      "id": "surgery",
+      "label": "Chirurgische ingreep",
+      "price": 1600,
+      "types": ["surgery"]
     },
     {
       "id": "body_preparation",
       "label": "Verwerking overledene",
-      "price": 500,
+      "price": 350,
       "types": ["death"]
     }
   ],
@@ -135,31 +165,31 @@
     {
       "id": "ambulance",
       "label": "Ambulancevervoer",
-      "price": 600,
+      "price": 450,
       "types": ["emergency", "admission"]
-    },
-    {
-      "id": "psych_followup",
-      "label": "Psychologische opvolging",
-      "price": 250,
-      "types": ["standard", "admission"]
-    },
-    {
-      "id": "aftercare",
-      "label": "Nazorg",
-      "price": 150,
-      "types": ["standard", "admission", "surgery"]
     },
     {
       "id": "specialist_consult",
       "label": "Specialistisch consult",
-      "price": 350,
+      "price": 250,
+      "types": ["standard", "admission", "surgery"]
+    },
+    {
+      "id": "psych_followup",
+      "label": "Psychologische opvolging",
+      "price": 175,
+      "types": ["standard", "admission"]
+    },
+    {
+      "id": "aftercare",
+      "label": "Nazorg / controle",
+      "price": 125,
       "types": ["standard", "admission", "surgery"]
     },
     {
       "id": "morgue_transfer",
       "label": "Transport naar mortuarium",
-      "price": 400,
+      "price": 275,
       "types": ["death"]
     }
   ]
