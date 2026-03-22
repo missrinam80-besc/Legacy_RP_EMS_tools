@@ -1,0 +1,95 @@
+{
+  "reportType": "Laboratoriumrapport",
+  "labTypeOptions": [
+    "Niet gespecificeerd",
+    "Bloedonderzoek",
+    "DNA-onderzoek",
+    "Verwantschapsonderzoek",
+    "Toxicologisch onderzoek",
+    "Infectieonderzoek",
+    "Allergieonderzoek",
+    "Pathologisch onderzoek",
+    "Forensisch staalonderzoek"
+  ],
+  "priorityOptions": [
+    "Niet gespecificeerd",
+    "Routine",
+    "Urgent",
+    "Stat / onmiddellijk"
+  ],
+  "resultStatusOptions": [
+    "Niet gespecificeerd",
+    "In behandeling",
+    "Voorlopig resultaat",
+    "Definitief resultaat",
+    "Onvoldoende staal",
+    "Nieuw staal vereist",
+    "Doorgestuurd voor vervolgonderzoek"
+  ],
+  "tests": [
+    "Volledig bloedbeeld",
+    "Bloedgroep / kruisproef",
+    "DNA-profiel",
+    "DNA-vergelijking",
+    "Verwantschapsanalyse",
+    "Toxicologie basispanel",
+    "Toxicologie uitgebreid panel",
+    "Alcohol / drugs screening",
+    "Infectiepanel",
+    "Allergiepanel",
+    "Weefselanalyse",
+    "Urineonderzoek"
+  ],
+  "resultFlags": [
+    "Normaal resultaat",
+    "Afwijkend resultaat",
+    "Positieve match",
+    "Geen match",
+    "Indicatie intoxicatie",
+    "Indicatie infectie",
+    "Indicatie allergische reactie",
+    "Resultaat beperkt interpreteerbaar"
+  ],
+  "baseCosts": [
+    {
+      "label": "Labo / uitgebreid onderzoek - €1.200",
+      "value": 1200
+    },
+    {
+      "label": "Standaard controleonderzoek - €500",
+      "value": 500
+    }
+  ],
+  "supplements": [
+    {
+      "label": "Extra staalanalyse",
+      "unitLabel": "€250 per analyse",
+      "cost": 250
+    },
+    {
+      "label": "DNA-profiel",
+      "unitLabel": "€600 per profiel",
+      "cost": 600
+    },
+    {
+      "label": "DNA-vergelijking",
+      "unitLabel": "€450 per vergelijking",
+      "cost": 450
+    },
+    {
+      "label": "Spoedverwerking",
+      "unitLabel": "€400 per dossier",
+      "cost": 400
+    },
+    {
+      "label": "Chain of custody",
+      "unitLabel": "€200 per dossier",
+      "cost": 200
+    },
+    {
+      "label": "Forensische handling",
+      "unitLabel": "€500 per dossier",
+      "cost": 500
+    }
+  ]
+}
