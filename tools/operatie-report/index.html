@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EMS Operatieverslag Generator</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="site-header">
+      <img src="../../assets/images/Banner.png" alt="EMS Operatieverslag Generator" />
+    </header>
+
+    <section class="intro">
+      <h1>EMS Operatieverslag Generator</h1>
+      <p>
+        Statische operatie-tool binnen de EMS Tools Hub. Geen database, geen backend en geen externe logging.
+        Alle gegevens blijven lokaal in de browser van de gebruiker.
+      </p>
+    </section>
+
+    <div class="tool-nav">
+      <a href="../../index.html">← Terug naar EMS Tools Hub</a>
+    </div>
+
+    <div class="layout">
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Invoer</h2>
+          <p>Vul de pre-op, intra-op en post-op gegevens in. Het operatieverslag wordt automatisch opgebouwd.</p>
+        </div>
+
+        <div class="panel-body">
+          <form id="reportForm">
+            <div class="section">
+              <h3>Algemene basisgegevens</h3>
+              <small>Deze velden komen in elk operatieverslag terug.</small>
+
+              <div class="grid">
+                <div class="field col-6">
+                  <label for="procedureType">Procedure / ingreep</label>
+                  <input id="procedureType" name="procedureType" type="text" placeholder="bv. wondexploratie, fractuurherstel, appendectomie..." />
+                </div>
+
+                <div class="field col-6">
+                  <label for="dateTime">Datum & tijd</label>
+                  <input id="dateTime" name="dateTime" type="datetime-local" />
+                </div>
+
+                <div class="field col-4">
+                  <label for="patientName">Naam patiënt</label>
+                  <input id="patientName" name="patientName" type="text" placeholder="Voornaam Achternaam" />
+                </div>
+
+                <div class="field col-4">
+                  <label for="patientId">Patiënt-ID / CID</label>
+                  <input id="patientId" name="patientId" type="text" placeholder="ID of registratienummer" />
+                </div>
+
+                <div class="field col-4">
+                  <label for="location">Locatie</label>
+                  <input id="location" name="location" type="text" placeholder="OK 1 / chirurgie / spoed-OK..." />
+                </div>
+
+                <div class="field col-4">
+                  <label for="staffLead">Hoofdchirurg / rapporteur</label>
+                  <input id="staffLead" name="staffLead" type="text" placeholder="Naam + callsign" />
+                </div>
+
+                <div class="field col-4">
+                  <label for="staffAssist">Assistent(en)</label>
+                  <input id="staffAssist" name="staffAssist" type="text" placeholder="Assistent-chirurg / scrub / hulp" />
+                </div>
+
+                <div class="field col-4">
+                  <label for="anesthesiaLead">Anesthesie</label>
+                  <input id="anesthesiaLead" name="anesthesiaLead" type="text" placeholder="Naam of team" />
+                </div>
+              </div>
+            </div>
+
+            <div class="section">
+              <h3>Pre-operatief</h3>
+              <small>Indicatie, voorbereiding en toestand voor de ingreep.</small>
+
+              <div class="grid">
+                <div class="field">
+                  <label for="surgeryIndication">Indicatie voor ingreep</label>
+                  <textarea id="surgeryIndication" name="surgeryIndication" placeholder="Waarom was de operatie medisch noodzakelijk?"></textarea>
+                </div>
+
+                <div class="field col-6">
+                  <label for="surgeryType">Type ingreep</label>
+                  <select id="surgeryType" name="surgeryType"></select>
+                </div>
+
+                <div class="field col-6">
+                  <label for="anesthesiaType">Anesthesie / sedatie</label>
+                  <select id="anesthesiaType" name="anesthesiaType"></select>
+                </div>
+
+                <div class="field col-6">
+                  <label for="asaRisk">Operatief risico / classificatie</label>
+                  <select id="asaRisk" name="asaRisk"></select>
+                </div>
+
+                <div class="field col-6">
+                  <label for="surgeryPriority">Prioriteit</label>
+                  <select id="surgeryPriority" name="surgeryPriority"></select>
+                </div>
+
+                <div class="field">
+                  <label for="preOpStatus">Pre-operatieve toestand</label>
+                  <textarea id="preOpStatus" name="preOpStatus" placeholder="Toestand voor de ingreep, risico's, voorbereiding, vitals..."></textarea>
+                </div>
+
+                <div class="field">
+                  <span class="group-title">Pre-op checks</span>
+                  <div id="preOpChecksContainer" class="checkbox-grid"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="section">
+              <h3>Intra-operatief</h3>
+              <small>Bevindingen, verloop en gebruikte technieken tijdens de ingreep.</small>
+
+              <div class="grid">
+                <div class="field">
+                  <span class="group-title">Intra-op bevindingen</span>
+                  <div id="operativeFindingsFlagsContainer" class="checkbox-grid"></div>
+                </div>
+
+                <div class="field">
+                  <span class="group-title">Uitgevoerde handelingen</span>
+                  <div id="operativeActionsContainer" class="checkbox-grid"></div>
+                </div>
+
+                <div class="field">
+                  <label for="operativeFindings">Intra-operatieve bevindingen</label>
+                  <textarea id="operativeFindings" name="operativeFindings" placeholder="Wat werd gezien of vastgesteld tijdens de ingreep?"></textarea>
+                </div>
+
+                <div class="field">
+                  <label for="operativeCourse">Verloop van de ingreep</label>
+                  <textarea id="operativeCourse" name="operativeCourse" placeholder="Beschrijf de procedure, techniek, instrumentatie en stappen"></textarea>
+                </div>
+
+                <div class="field col-6">
+                  <label for="bloodLoss">Geschat bloedverlies</label>
+                  <input id="bloodLoss" name="bloodLoss" type="number" min="0" placeholder="ml" />
+                </div>
+
+                <div class="field col-6">
+                  <label for="duration">Duur van de ingreep</label>
+                  <input id="duration" name="duration" type="text" placeholder="bv. 45 min, 1u20..." />
+                </div>
+
+                <div class="field">
+                  <label for="materialsUsed">Gebruikte materialen / implantaten / hulpmiddelen</label>
+                  <textarea id="materialsUsed" name="materialsUsed" placeholder="Hechtingen, platen, fixatie, verbandmateriaal, drains..."></textarea>
+                </div>
+
+                <div class="field">
+                  <label for="complications">Complicaties / bijzonderheden</label>
+                  <textarea id="complications" name="complications" placeholder="Complicaties, moeilijkheden of bijzonderheden tijdens de ingreep"></textarea>
+                </div>
+              </div>
+            </div>
+
+            <div class="section">
+              <h3>Post-operatief</h3>
+              <small>Toestand na de ingreep en verdere opvolging.</small>
+
+              <div class="grid">
+                <div class="field">
+                  <span class="group-title">Post-op aandachtspunten</span>
+                  <div id="postOpFlagsContainer" class="checkbox-grid"></div>
+                </div>
+
+                <div class="field">
+                  <label for="postOpStatus">Post-operatieve toestand</label>
+                  <textarea id="postOpStatus" name="postOpStatus" placeholder="Toestand na de ingreep, stabiliteit, complicaties, transport..."></textarea>
+                </div>
+
+                <div class="field">
+                  <label for="postOpPlan">Post-op plan / nazorg</label>
+                  <textarea id="postOpPlan" name="postOpPlan" placeholder="Opvolging, medicatie, rust, controle, opname of ontslag..."></textarea>
+                </div>
+
+                <div class="field">
+                  <label for="postOpInstructions">Post-op instructies</label>
+                  <textarea id="postOpInstructions" name="postOpInstructions" placeholder="Wondzorg, observatie, pijncontrole, mobilisatie, alarmsymptomen..."></textarea>
+                </div>
+
+                <div class="field col-6">
+                  <label for="disposition">Eindbestemming</label>
+                  <select id="disposition" name="disposition"></select>
+                </div>
+
+                <div class="field col-6">
+                  <label for="followUp">Follow-up / controle</label>
+                  <input id="followUp" name="followUp" type="text" placeholder="bv. controle chirurgie na 24u / 48u / 1 week" />
+                </div>
+              </div>
+            </div>
+
+            <div class="section">
+              <h3>Kosten</h3>
+              <small>Basistarief en supplementen. De totaalprijs wordt automatisch berekend.</small>
+
+              <div class="grid">
+                <div class="field col-6">
+                  <label for="baseCost">Basistarief</label>
+                  <select id="baseCost" name="baseCost"></select>
+                </div>
+
+                <div class="field col-6">
+                  <label for="customCost">Manuele correctie (€)</label>
+                  <input id="customCost" name="customCost" type="number" step="1" value="0" />
+                </div>
+
+                <div class="field">
+                  <span class="group-title">Supplementen</span>
+                  <div id="supplementsContainer" class="cost-grid"></div>
+                </div>
+
+                <div class="field">
+                  <label for="costNotes">Kostennotitie</label>
+                  <input id="costNotes" name="costNotes" type="text" placeholder="bv. complexe ingreep, intern dossier, vrijstelling..." />
+                </div>
+              </div>
+            </div>
+
+            <div class="section">
+              <h3>Extra notities</h3>
+              <small>Optioneel algemeen veld voor zaken die nergens anders passen.</small>
+
+              <div class="grid">
+                <div class="field">
+                  <label for="freeNotes">Extra notities</label>
+                  <textarea id="freeNotes" name="freeNotes" placeholder="Vrije notities"></textarea>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <aside class="output-wrap">
+        <section class="panel">
+          <div class="panel-header">
+            <h2>Output</h2>
+            <p>Het rapportveld is read-only en klaar om te kopiëren naar MDT, notitieveld of dossier.</p>
+          </div>
+
+          <div class="panel-body">
+            <div id="statusBox" class="status hidden"></div>
+
+            <div class="output-meta">
+              <div class="meta-card">
+                <strong>Type ingreep</strong>
+                <span id="surgeryTypeDisplay">—</span>
+              </div>
+
+              <div class="meta-card">
+                <strong>Eindbestemming</strong>
+                <span id="dispositionDisplay">—</span>
+              </div>
+
+              <div class="meta-card">
+                <strong>Totaalkost</strong>
+                <span id="costDisplay">€0</span>
+              </div>
+            </div>
+
+            <textarea id="reportOutput" class="output" readonly></textarea>
+
+            <div class="actions">
+              <button type="button" class="btn-primary" id="copyBtn">Kopieer</button>
+              <button type="button" class="btn-secondary" id="downloadTxtBtn">Download .txt</button>
+              <button type="button" class="btn-secondary" id="downloadJsonBtn">Download .json</button>
+              <button type="button" class="btn-secondary" id="clearStorageBtn">Wis lokale opslag</button>
+              <button type="button" class="btn-secondary" id="manualRefreshBtn">Herbouw rapport</button>
+              <button type="button" class="btn-danger" id="resetBtn">Reset alles</button>
+            </div>
+
+            <p class="note">
+              Deze versie werkt volledig lokaal in de browser en is geschikt voor GitHub Pages.
+            </p>
+
+            <div class="footer-note">
+              Externe logging is bewust niet actief. Alle gegevens blijven lokaal op het toestel van de gebruiker.
+            </div>
+          </div>
+        </section>
+      </aside>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
