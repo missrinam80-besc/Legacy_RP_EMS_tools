@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EMS Overlijdensrapport Generator</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="site-header">
+      <img src="../../assets/images/Banner.png" alt="EMS Overlijdensrapport Generator" />
+    </header>
+
+    <section class="intro">
+      <h1>EMS Overlijdensrapport Generator</h1>
+      <p>
+        Statische overlijden-tool binnen de EMS Tools Hub. Geen database, geen backend en geen externe logging.
+        Alle gegevens blijven lokaal in de browser van de gebruiker.
+      </p>
+    </section>
+
+    <div class="tool-nav">
+      <a href="../../index.html">← Terug naar EMS Tools Hub</a>
+    </div>
+
+    <div class="layout">
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Invoer</h2>
+          <p>Vul de gegevens rond vaststelling, context en afhandeling in. Het overlijdensrapport wordt automatisch opgebouwd.</p>
+        </div>
+
+        <div class="panel-body">
+          <form id="reportForm">
+            <div class="section">
+              <h3>Algemene basisgegevens</h3>
+              <small>Deze velden komen in elk overlijdensrapport terug.</small>
+
+              <div class="grid">
+                <div class="field col-6">
+                  <label for="procedureType">Procedure / dossier</label>
+                  <input id="procedureType" name="procedureType" type="text" placeholder="bv. doodverklaring, forensische afhandeling, overlijden na trauma..." />
+                </div>
+
+                <div class="field col-6">
+                  <label for="dateTime">Datum & tijd rapport</label>
+                  <input id="dateTime" name="dateTime" type="datetime-local" />
+                </div>
+
+                <div class="field col-4">
+                  <label for="patientName">Naam overledene</label>
+                  <input id="patientName" name="patientName" type="text" placeholder="Voornaam Achternaam" />
+                </div>
+
+                <div class="field col-4">
+                  <label for="patientId">Patiënt-ID / CID</label>
+                  <input id="patientId" name="patientId" type="text" placeholder="ID of registratienummer" />
+                </div>
+
+                <div class="field col-4">
+                  <label for="location">Locatie</label>
+                  <input id="location" name="location" type="text" placeholder="Spoed / mortuarium / incidentlocatie / OK..." />
+                </div>
+
+                <div class="field col-6">
+                  <label for="staffLead">Rapporteur / vaststellend arts</label>
+                  <input id="staffLead" name="staffLead" type="text" placeholder="Naam + callsign" />
+                </div>
+
+                <div class="field col-6">
+                  <label for="staffAssist">Assistent(en) / aanwezigen</label>
+                  <input id="staffAssist" name="staffAssist" type="text" placeholder="Optioneel" />
+                </div>
+              </div>
+            </div>
+
+            <div class="section">
+              <h3>Context en vaststelling</h3>
+              <small>Gebruik dit voor aantreffen, onderzoek en doodsvaststelling.</small>
+
+              <div class="grid">
+                <div class="field">
+                  <label for="deceasedContext">Context van aantreffen / overlijden</label>
+                  <textarea id="deceasedContext" name="deceasedContext" placeholder="Situatie, omstandigheden, wie aanwezig was, relevante context..."></textarea>
+                </div>
+
+                <div class="field col-6">
+                  <label for="deceasedTime">Tijdstip overlijden / vaststelling</label>
+                  <input id="deceasedTime" name="deceasedTime" type="text" placeholder="bv. 21:14" />
+                </div>
+
+                <div class="field col-6">
+                  <label for="deceasedPlace">Plaats van overlijden</label>
+                  <input id="deceasedPlace" name="deceasedPlace" type="text" placeholder="bv. spoed, OK, incidentlocatie..." />
+                </div>
+
+                <div class="field col-6">
+                  <label for="deathType">Type overlijden</label>
+                  <select id="deathType" name="deathType"></select>
+                </div>
+
+                <div class="field col-6">
+                  <label for="forensicPriority">Forensische prioriteit</label>
+                  <select id="forensicPriority" name="forensicPriority"></select>
+                </div>
+
+                <div class="field">
+                  <span class="group-title">Vaststellingen bij onderzoek</span>
+                  <div id="deathExamFlagsContainer" class="checkbox-grid"></div>
+                </div>
+
+                <div class="field">
+                  <label for="deathExam">Vaststellingen bij onderzoek — detail</label>
+                  <textarea id="deathExam" name="deathExam" placeholder="Geen ademhaling, geen circulatie, geen neurologische respons, letsels, tekenen van overlijden..."></textarea>
+                </div>
+
+                <div class="field">
+                  <label for="resuscitationStatus">Reanimatie / voorafgaande interventies</label>
+                  <textarea id="resuscitationStatus" name="resuscitationStatus" placeholder="Werd er gereanimeerd? Welke handelingen gingen vooraf?"></textarea>
+                </div>
+
+                <div class="field">
+                  <label for="presumedCause">Vermoedelijke doodsoorzaak</label>
+                  <textarea id="presumedCause" name="presumedCause" placeholder="Medisch of voorlopig vermoeden"></textarea>
+                </div>
+              </div>
+            </div>
+
+            <div class="section">
+              <h3>Afhandeling en meldingen</h3>
+              <small>Duid administratieve, forensische en familiale afhandeling aan.</small>
+
+              <div class="grid">
+                <div class="field">
+                  <span class="group-title">Forensische / administratieve stappen</span>
+                  <div id="forensicHandlingFlagsContainer" class="checkbox-grid"></div>
+                </div>
+
+                <div class="field">
+                  <span class="group-title">Meldingen / communicatie</span>
+                  <div id="notificationFlagsContainer" class="checkbox-grid"></div>
+                </div>
+
+                <div class="field">
+                  <label for="forensicHandling">Forensische / administratieve afhandeling</label>
+                  <textarea id="forensicHandling" name="forensicHandling" placeholder="Overdracht, veiligstelling, melding, mortuarium, politie, documentatie..."></textarea>
+                </div>
+
+                <div class="field">
+                  <label for="nextOfKin">Melding familie / bevoegde diensten</label>
+                  <textarea id="nextOfKin" name="nextOfKin" placeholder="Wie werd verwittigd, door wie, en welke verdere afspraken zijn gemaakt?"></textarea>
+                </div>
+
+                <div class="field col-6">
+                  <label for="bodyDisposition">Bestemming lichaam / overdracht</label>
+                  <select id="bodyDisposition" name="bodyDisposition"></select>
+                </div>
+
+                <div class="field col-6">
+                  <label for="followUp">Follow-up / vervolgactie</label>
+                  <input id="followUp" name="followUp" type="text" placeholder="bv. autopsie, dossieroverdracht, verder forensisch onderzoek..." />
+                </div>
+
+                <div class="field">
+                  <label for="propertyNotes">Persoonlijke bezittingen / registraties</label>
+                  <textarea id="propertyNotes" name="propertyNotes" placeholder="Bezittingen, overdracht, inventaris, zegels, labels..."></textarea>
+                </div>
+              </div>
+            </div>
+
+            <div class="section">
+              <h3>Kosten</h3>
+              <small>Basistarief en supplementen. De totaalprijs wordt automatisch berekend.</small>
+
+              <div class="grid">
+                <div class="field col-6">
+                  <label for="baseCost">Basistarief</label>
+                  <select id="baseCost" name="baseCost"></select>
+                </div>
+
+                <div class="field col-6">
+                  <label for="customCost">Manuele correctie (€)</label>
+                  <input id="customCost" name="customCost" type="number" step="1" value="0" />
+                </div>
+
+                <div class="field">
+                  <span class="group-title">Supplementen</span>
+                  <div id="supplementsContainer" class="cost-grid"></div>
+                </div>
+
+                <div class="field">
+                  <label for="costNotes">Kostennotitie</label>
+                  <input id="costNotes" name="costNotes" type="text" placeholder="bv. forensisch dossier, vrijstelling, intern onderzoek..." />
+                </div>
+              </div>
+            </div>
+
+            <div class="section">
+              <h3>Extra notities</h3>
+              <small>Optioneel algemeen veld voor zaken die nergens anders passen.</small>
+
+              <div class="grid">
+                <div class="field">
+                  <label for="freeNotes">Extra notities</label>
+                  <textarea id="freeNotes" name="freeNotes" placeholder="Vrije notities"></textarea>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <aside class="output-wrap">
+        <section class="panel">
+          <div class="panel-header">
+            <h2>Output</h2>
+            <p>Het rapportveld is read-only en klaar om te kopiëren naar MDT, notitieveld of dossier.</p>
+          </div>
+
+          <div class="panel-body">
+            <div id="statusBox" class="status hidden"></div>
+
+            <div class="output-meta">
+              <div class="meta-card">
+                <strong>Type overlijden</strong>
+                <span id="deathTypeDisplay">—</span>
+              </div>
+
+              <div class="meta-card">
+                <strong>Overdracht</strong>
+                <span id="bodyDispositionDisplay">—</span>
+              </div>
+
+              <div class="meta-card">
+                <strong>Totaalkost</strong>
+                <span id="costDisplay">€0</span>
+              </div>
+            </div>
+
+            <textarea id="reportOutput" class="output" readonly></textarea>
+
+            <div class="actions">
+              <button type="button" class="btn-primary" id="copyBtn">Kopieer</button>
+              <button type="button" class="btn-secondary" id="downloadTxtBtn">Download .txt</button>
+              <button type="button" class="btn-secondary" id="downloadJsonBtn">Download .json</button>
+              <button type="button" class="btn-secondary" id="clearStorageBtn">Wis lokale opslag</button>
+              <button type="button" class="btn-secondary" id="manualRefreshBtn">Herbouw rapport</button>
+              <button type="button" class="btn-danger" id="resetBtn">Reset alles</button>
+            </div>
+
+            <p class="note">
+              Deze versie werkt volledig lokaal in de browser en is geschikt voor GitHub Pages.
+            </p>
+
+            <div class="footer-note">
+              Externe logging is bewust niet actief. Alle gegevens blijven lokaal op het toestel van de gebruiker.
+            </div>
+          </div>
+        </section>
+      </aside>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
