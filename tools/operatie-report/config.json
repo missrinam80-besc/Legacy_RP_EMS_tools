@@ -1,0 +1,133 @@
+{
+  "reportType": "Operatieverslag",
+  "surgeryTypeOptions": [
+    "Niet gespecificeerd",
+    "Spoedoperatie",
+    "Geplande ingreep",
+    "Traumachirurgie",
+    "Wondexploratie",
+    "Fractuurherstel",
+    "Abdominale ingreep",
+    "Orthopedische ingreep",
+    "Kleine heelkunde"
+  ],
+  "anesthesiaTypeOptions": [
+    "Niet gespecificeerd",
+    "Algemene narcose",
+    "Sedatie",
+    "Lokale verdoving",
+    "Regionale verdoving",
+    "Geen anesthesie"
+  ],
+  "asaRiskOptions": [
+    "Niet gespecificeerd",
+    "Laag risico",
+    "Matig risico",
+    "Verhoogd risico",
+    "Kritiek risico"
+  ],
+  "surgeryPriorityOptions": [
+    "Niet gespecificeerd",
+    "Routine",
+    "Urgent",
+    "Spoed",
+    "Levensreddend"
+  ],
+  "preOpChecks": [
+    "Patiëntidentificatie bevestigd",
+    "Indicatie bevestigd",
+    "Toestemming bevestigd",
+    "Allergieën nagekeken",
+    "Nuchterstatus nagegaan",
+    "Labo nagekeken",
+    "Beeldvorming nagekeken",
+    "Materiaal voorbereid",
+    "Anesthesiebriefing gebeurd",
+    "Time-out uitgevoerd"
+  ],
+  "operativeFindingsFlags": [
+    "Actieve bloeding",
+    "Interne schade",
+    "Fractuur bevestigd",
+    "Infectieus aspect",
+    "Necrotisch weefsel",
+    "Vreemd voorwerp aanwezig",
+    "Contaminatie aanwezig",
+    "Geen bijkomende afwijkingen"
+  ],
+  "operativeActions": [
+    "Incisie uitgevoerd",
+    "Hemostase uitgevoerd",
+    "Spoeling / irrigatie",
+    "Debridement",
+    "Hechting / sluiting",
+    "Fixatie geplaatst",
+    "Drain geplaatst",
+    "Verband aangebracht",
+    "Transfusie toegediend",
+    "Controlebeeldvorming"
+  ],
+  "postOpFlags": [
+    "Stabiel post-op",
+    "Pijncontrole vereist",
+    "Observatie vereist",
+    "Intensieve opvolging vereist",
+    "Wondcontrole vereist",
+    "Antibiotica voorzien",
+    "Respiratoire opvolging vereist",
+    "Mobilisatie uitgesteld",
+    "Bijkomend labo nodig",
+    "Complicatiewaakzaamheid nodig"
+  ],
+  "dispositionOptions": [
+    "Niet gespecificeerd",
+    "Recovery / verkoever",
+    "Opname op afdeling",
+    "ICU / intensieve zorgen",
+    "Ontslag na observatie",
+    "Terug naar spoed",
+    "Overdracht andere dienst"
+  ],
+  "baseCosts": [
+    {
+      "label": "Chirurgische ingreep - €3.000",
+      "value": 3000
+    },
+    {
+      "label": "Kleine heelkunde - €1.500",
+      "value": 1500
+    }
+  ],
+  "supplements": [
+    {
+      "label": "Narcose / sedatie",
+      "unitLabel": "€500 per keer",
+      "cost": 500
+    },
+    {
+      "label": "Bloed / transfusie",
+      "unitLabel": "€750 per eenheid",
+      "cost": 750
+    },
+    {
+      "label": "Implantaten / fixatie",
+      "unitLabel": "€900 per set",
+      "cost": 900
+    },
+    {
+      "label": "Opnamedag post-op",
+      "unitLabel": "€850 per dag",
+      "cost": 850
+    },
+    {
+      "label": "Medicatiepakket",
+      "unitLabel": "€250 per pakket",
+      "cost": 250
+    },
+    {
+      "label": "Intensieve monitoring",
+      "unitLabel": "€450 per periode",
+      "cost": 450
+    }
+  ]
+}
