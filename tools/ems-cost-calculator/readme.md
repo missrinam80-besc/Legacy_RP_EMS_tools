@@ -1,31 +1,42 @@
-# EMS Ziekenhuiskosten Calculator
+# EMS Ziekenhuiskosten Calculator v2
 
-Losse webtool voor het berekenen van ziekenhuiskosten binnen een EMS / ziekenhuiscontext.
+Versie 2 van de kostencalculator met een dropdown voor type bezoek.
 
 ## Kenmerken
-- Volledig in HTML, CSS, JavaScript en JSON
+- HTML / CSS / JavaScript / JSON
 - Geen database
 - Geen backend
-- Geschikt voor GitHub Pages
-- Makkelijk aanpasbare prijzen via `pricing.json`
+- Werkt op GitHub Pages
+- Dropdown bepaalt welke prijsopties zichtbaar zijn
 
-## Bestanden
-- `index.html` → interface
-- `style.css` → opmaak
-- `script.js` → logica
-- `pricing.json` → tarieven
-- `README.md` → documentatie
+## Beschikbare types
+- Standaard consult
+- Spoed / trauma
+- Opname
+- Operatie
+- Overlijden / doodverklaring
 
-## Gebruik
-1. Open `index.html` lokaal of via GitHub Pages
-2. Kies een basiskost
-3. Vink onderzoeken, behandelingen en extra's aan
-4. Voeg indien nodig een manuele correctie toe
-5. Kopieer het overzicht of de compacte tekst
+## Werking
+1. Kies het type bezoek
+2. De tool toont enkel relevante kostenopties
+3. Kies basiskost, onderzoeken, behandelingen en extra's
+4. Voeg indien nodig een correctie toe
+5. Kopieer de output
 
 ## Prijzen aanpassen
-Pas de waarden in `pricing.json` aan.
+Pas `pricing.json` aan.
+
+Elke prijsregel heeft:
+- `id`
+- `label`
+- `price`
+- `types`
 
 Voorbeeld:
 ```json
-{ "id": "xray", "label": "X-ray", "price": 300 }
+{
+  "id": "xray",
+  "label": "X-ray",
+  "price": 300,
+  "types": ["emergency", "admission", "surgery"]
+}
