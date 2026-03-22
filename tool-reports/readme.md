@@ -1,6 +1,6 @@
-# EMS Trauma Rapportgenerator
+# EMS Rapportgenerator
 
-Statische trauma-rapporttool in HTML/CSS/JS/JSON, zonder database en geschikt voor GitHub Pages.
+Statische rapporttool in HTML/CSS/JS/JSON, zonder database en geschikt voor GitHub Pages.
 
 ## Bestanden
 
