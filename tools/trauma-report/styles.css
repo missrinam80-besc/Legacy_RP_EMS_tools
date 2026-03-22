@@ -445,3 +445,22 @@ code {
     flex-direction: column;
   }
 }
+
+.tool-nav {
+  margin-bottom: 18px;
+}
+
+.tool-nav a {
+  display: inline-block;
+  text-decoration: none;
+  color: #7d0000;
+  font-weight: 700;
+  background: #ffffff;
+  border: 1px solid #dfdfdf;
+  padding: 10px 14px;
+  border-radius: 10px;
+}
+
+.tool-nav a:hover {
+  text-decoration: underline;
+}
