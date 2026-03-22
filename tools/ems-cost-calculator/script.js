@@ -295,9 +295,8 @@ function formatItemLines(items) {
 }
 
 function formatMoney(value) {
-  const currencySymbol = document.getElementById("currencySymbol")?.value?.trim() || "$";
   const sign = value < 0 ? "-" : "";
-  return `${sign}${currencySymbol}${Math.abs(value)}`;
+  return `${sign}€${Math.abs(value)}`;
 }
 
 async function copyTextareaValue(textareaId) {
