@@ -15,8 +15,8 @@
     <section class="intro">
       <h1>EMS Trauma Rapportgenerator</h1>
       <p>
-        Statische webtool voor GitHub Pages. Geen database, geen backend, geen Google-koppeling.
-        Alle logica draait in HTML, CSS, JavaScript en JSON-configuratie.
+        Statische trauma-tool binnen de EMS Tools Hub. Geen database, geen backend en geen externe logging.
+        Alle gegevens blijven lokaal in de browser van de gebruiker.
       </p>
     </section>
 
@@ -276,6 +276,7 @@
               <button type="button" class="btn-primary" id="copyBtn">Kopieer</button>
               <button type="button" class="btn-secondary" id="downloadTxtBtn">Download .txt</button>
               <button type="button" class="btn-secondary" id="downloadJsonBtn">Download .json</button>
+              <button type="button" class="btn-secondary" id="clearStorageBtn">Wis lokale opslag</button>
               <button type="button" class="btn-secondary" id="manualRefreshBtn">Herbouw rapport</button>
               <button type="button" class="btn-danger" id="resetBtn">Reset alles</button>
             </div>
@@ -285,7 +286,7 @@
             </p>
 
             <div class="footer-note">
-              Externe logging is bewust niet standaard actief, zodat er geen geheime tokens of URLs in de frontend staan.
+              Externe logging is bewust niet actief. Alle gegevens blijven lokaal op het toestel van de gebruiker.
             </div>
           </div>
         </section>
