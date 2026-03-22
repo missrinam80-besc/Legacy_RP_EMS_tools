@@ -1,0 +1,84 @@
+{
+  "reportType": "Traumarapport",
+  "triageOptions": [
+    "Niet gespecificeerd",
+    "Rood - kritiek",
+    "Oranje - urgent",
+    "Geel - semi-urgent",
+    "Groen - stabiel",
+    "Blauw - geen acute dreiging"
+  ],
+  "dispositionOptions": [
+    "Niet gespecificeerd",
+    "Ontslagen ter plaatse",
+    "Ontslagen uit ziekenhuis",
+    "Opgenomen ter observatie",
+    "Door naar OK",
+    "Overgebracht naar afdeling"
+  ],
+  "findings": [
+    "Actieve bloeding",
+    "Steekwonde",
+    "Schotwonde",
+    "Brandwonde",
+    "Breuk / fractuur",
+    "Contusie / kneuzing",
+    "Neurologische symptomen",
+    "Bewustzijnsverlies",
+    "Respiratoire klachten",
+    "Stabiele toestand"
+  ],
+  "actions": [
+    "ABCDE-evaluatie",
+    "Wondreiniging",
+    "Drukverband",
+    "Tourniquet",
+    "Infuus / vochttoediening",
+    "Immobilisatie",
+    "Hechting / sluiting",
+    "Monitoring",
+    "Nazorginstructies gegeven"
+  ],
+  "baseCosts": [
+    {
+      "label": "Trauma-opvang - €2.000",
+      "value": 2000
+    },
+    {
+      "label": "Standaard check-in / volledig herstel - €500",
+      "value": 500
+    }
+  ],
+  "supplements": [
+    {
+      "label": "Laboratorium",
+      "unitLabel": "€400 per set",
+      "cost": 400
+    },
+    {
+      "label": "Gips / immobilisatie",
+      "unitLabel": "€600 per toepassing",
+      "cost": 600
+    },
+    {
+      "label": "Bloed / transfusie",
+      "unitLabel": "€750 per eenheid",
+      "cost": 750
+    },
+    {
+      "label": "Narcose / sedatie",
+      "unitLabel": "€500 per keer",
+      "cost": 500
+    },
+    {
+      "label": "Medicatiepakket",
+      "unitLabel": "€250 per pakket",
+      "cost": 250
+    },
+    {
+      "label": "Opnamedag",
+      "unitLabel": "€850 per dag",
+      "cost": 850
+    }
+  ]
+}
