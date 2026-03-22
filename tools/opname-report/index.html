@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EMS Opnameverslag Generator</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="site-header">
+      <img src="../../assets/images/Banner.png" alt="EMS Opnameverslag Generator" />
+    </header>
+
+    <section class="intro">
+      <h1>EMS Opnameverslag Generator</h1>
+      <p>
+        Statische opname-tool binnen de EMS Tools Hub. Geen database, geen backend en geen externe logging.
+        Alle gegevens blijven lokaal in de browser van de gebruiker.
+      </p>
+    </section>
+
+    <div class="tool-nav">
+      <a href="../../index.html">← Terug naar EMS Tools Hub</a>
+    </div>
+
+    <div class="layout">
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Invoer</h2>
+          <p>Vul de opnamegegevens in. Het opnameverslag wordt automatisch opgebouwd.</p>
+        </div>
+
+        <div class="panel-body">
+          <form id="reportForm">
+            <div class="section">
+              <h3>Algemene basisgegevens</h3>
+              <small>Deze velden komen in elk opnameverslag terug.</small>
+
+              <div class="grid">
+                <div class="field col-6">
+                  <label for="procedureType">Procedure / opnamegrond</label>
+                  <input id="procedureType" name="procedureType" type="text" placeholder="bv. observatie, post-op opname, trauma-opname..." />
+                </div>
+
+                <div class="field col-6">
+                  <label for="dateTime">Datum & tijd</label>
+                  <input id="dateTime" name="dateTime" type="datetime-local" />
+                </div>
+
+                <div class="field col-4">
+                  <label for="patientName">Naam patiënt</label>
+                  <input id="patientName" name="patientName" type="text" placeholder="Voornaam Achternaam" />
+                </div>
+
+                <div class="field col-4">
+                  <label for="patientId">Patiënt-ID / CID</label>
+                  <input id="patientId" name="patientId" type="text" placeholder="ID of registratienummer" />
+                </div>
+
+                <div class="field col-4">
+                  <label for="location">Locatie</label>
+                  <input id="location" name="location" type="text" placeholder="Spoed / observatie / ICU / chirurgie..." />
+                </div>
+
+                <div class="field col-6">
+                  <label for="staffLead">Behandelaar / rapporteur</label>
+                  <input id="staffLead" name="staffLead" type="text" placeholder="Naam + callsign" />
+                </div>
+
+                <div class="field col-6">
+                  <label for="staffAssist">Assistent(en)</label>
+                  <input id="staffAssist" name="staffAssist" type="text" placeholder="Optioneel" />
+                </div>
+              </div>
+            </div>
+
+            <div class="section">
+              <h3>Opname — intake en context</h3>
+              <small>Gebruik dit voor opname ter observatie of verdere behandeling.</small>
+
+              <div class="grid">
+                <div class="field">
+                  <label for="admissionReason">Reden van opname</label>
+                  <textarea id="admissionReason" name="admissionReason" placeholder="Waarom werd de patiënt opgenomen?"></textarea>
+                </div>
+
+                <div class="field">
+                  <label for="admissionHistory">Voorgeschiedenis / relevante context</label>
+                  <textarea id="admissionHistory" name="admissionHistory" placeholder="Samenvatting van klachten, voorgeschiedenis, lopende behandeling, medicatie..."></textarea>
+                </div>
+
+                <div class="field col-6">
+                  <label for="admissionType">Type opname</label>
+                  <select id="admissionType" name="admissionType"></select>
+                </div>
+
+                <div class="field col-6">
+                  <label for="admissionPriority">Prioriteit</label>
+                  <select id="admissionPriority" name="admissionPriority"></select>
+                </div>
+
+                <div class="field col-6">
+                  <label for="admissionWard">Afdeling / kamer</label>
+                  <input id="admissionWard" name="admissionWard" type="text" placeholder="bv. observatie, chirurgie, ICU..." />
+                </div>
+
+                <div class="field col-6">
+                  <label for="admissionStatus">Toestand bij opname</label>
+                  <input id="admissionStatus" name="admissionStatus" type="text" placeholder="bv. stabiel, onstabiel, postoperatief..." />
+                </div>
+
+                <div class="field">
+                  <label for="admissionExam">Onderzoek en bevindingen</label>
+                  <textarea id="admissionExam" name="admissionExam" placeholder="Klinische toestand, vitals, verwondingen, observaties..."></textarea>
+                </div>
+              </div>
+            </div>
+
+            <div class="section">
+              <h3>Opname — zorgplan en opvolging</h3>
+              <small>Duid opnamekenmerken, risicofactoren en vervolgplan aan.</small>
+
+              <div class="grid">
+                <div class="field">
+                  <span class="group-title">Opname-indicaties</span>
+                  <div id="indicationsContainer" class="checkbox-grid"></div>
+                </div>
+
+                <div class="field">
+                  <span class="group-title">Observatie / opvolgpunten</span>
+                  <div id="monitoringContainer" class="checkbox-grid"></div>
+                </div>
+
+                <div class="field">
+                  <span class="group-title">Risico's / aandachtspunten</span>
+                  <div id="riskFlagsContainer" class="checkbox-grid"></div>
+                </div>
+
+                <div class="field">
+                  <label for="admissionPlan">Behandelplan / observatieplan</label>
+                  <textarea id="admissionPlan" name="admissionPlan" placeholder="Welke opvolging, monitoring, medicatie of onderzoeken werden voorzien?"></textarea>
+                </div>
+
+                <div class="field">
+                  <label for="admissionMedications">Medicatie / interventies tijdens opname</label>
+                  <textarea id="admissionMedications" name="admissionMedications" placeholder="Toegediende medicatie, infusen, hulpmiddelen, therapieën..."></textarea>
+                </div>
+
+                <div class="field">
+                  <label for="admissionInstructions">Instructies / afspraken</label>
+                  <textarea id="admissionInstructions" name="admissionInstructions" placeholder="Specifieke instructies tijdens opname"></textarea>
+                </div>
+
+                <div class="field col-6">
+                  <label for="estimatedStay">Geschatte duur opname</label>
+                  <input id="estimatedStay" name="estimatedStay" type="text" placeholder="bv. 24u observatie, 2 dagen, onbepaald..." />
+                </div>
+
+                <div class="field col-6">
+                  <label for="dischargeExpectation">Verwachte afhandeling</label>
+                  <select id="dischargeExpectation" name="dischargeExpectation"></select>
+                </div>
+
+                <div class="field">
+                  <label for="followUp">Follow-up / vervolgactie</label>
+                  <input id="followUp" name="followUp" type="text" placeholder="bv. controle arts, nieuwe beeldvorming, OK-consult..." />
+                </div>
+              </div>
+            </div>
+
+            <div class="section">
+              <h3>Kosten</h3>
+              <small>Basistarief en supplementen. De totaalprijs wordt automatisch berekend.</small>
+
+              <div class="grid">
+                <div class="field col-6">
+                  <label for="baseCost">Basistarief</label>
+                  <select id="baseCost" name="baseCost"></select>
+                </div>
+
+                <div class="field col-6">
+                  <label for="customCost">Manuele correctie (€)</label>
+                  <input id="customCost" name="customCost" type="number" step="1" value="0" />
+                </div>
+
+                <div class="field">
+                  <span class="group-title">Supplementen</span>
+                  <div id="supplementsContainer" class="cost-grid"></div>
+                </div>
+
+                <div class="field">
+                  <label for="costNotes">Kostennotitie</label>
+                  <input id="costNotes" name="costNotes" type="text" placeholder="bv. langdurige observatie, vrijstelling, intern dossier..." />
+                </div>
+              </div>
+            </div>
+
+            <div class="section">
+              <h3>Extra notities</h3>
+              <small>Optioneel algemeen veld voor zaken die nergens anders passen.</small>
+
+              <div class="grid">
+                <div class="field">
+                  <label for="freeNotes">Extra notities</label>
+                  <textarea id="freeNotes" name="freeNotes" placeholder="Vrije notities"></textarea>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <aside class="output-wrap">
+        <section class="panel">
+          <div class="panel-header">
+            <h2>Output</h2>
+            <p>Het rapportveld is read-only en klaar om te kopiëren naar MDT, notitieveld of dossier.</p>
+          </div>
+
+          <div class="panel-body">
+            <div id="statusBox" class="status hidden"></div>
+
+            <div class="output-meta">
+              <div class="meta-card">
+                <strong>Type opname</strong>
+                <span id="admissionTypeDisplay">—</span>
+              </div>
+
+              <div class="meta-card">
+                <strong>Verwachte afhandeling</strong>
+                <span id="dischargeDisplay">—</span>
+              </div>
+
+              <div class="meta-card">
+                <strong>Totaalkost</strong>
+                <span id="costDisplay">€0</span>
+              </div>
+            </div>
+
+            <textarea id="reportOutput" class="output" readonly></textarea>
+
+            <div class="actions">
+              <button type="button" class="btn-primary" id="copyBtn">Kopieer</button>
+              <button type="button" class="btn-secondary" id="downloadTxtBtn">Download .txt</button>
+              <button type="button" class="btn-secondary" id="downloadJsonBtn">Download .json</button>
+              <button type="button" class="btn-secondary" id="clearStorageBtn">Wis lokale opslag</button>
+              <button type="button" class="btn-secondary" id="manualRefreshBtn">Herbouw rapport</button>
+              <button type="button" class="btn-danger" id="resetBtn">Reset alles</button>
+            </div>
+
+            <p class="note">
+              Deze versie werkt volledig lokaal in de browser en is geschikt voor GitHub Pages.
+            </p>
+
+            <div class="footer-note">
+              Externe logging is bewust niet actief. Alle gegevens blijven lokaal op het toestel van de gebruiker.
+            </div>
+          </div>
+        </section>
+      </aside>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
