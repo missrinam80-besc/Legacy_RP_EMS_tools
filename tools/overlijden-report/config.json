@@ -1,0 +1,99 @@
+{
+  "reportType": "Overlijdensrapport",
+  "deathTypeOptions": [
+    "Niet gespecificeerd",
+    "Natuurlijk overlijden",
+    "Overlijden na trauma",
+    "Overlijden na ziektebeeld",
+    "Onverwacht overlijden",
+    "Verdacht overlijden",
+    "Forensisch relevant overlijden",
+    "Overlijden tijdens behandeling"
+  ],
+  "forensicPriorityOptions": [
+    "Niet gespecificeerd",
+    "Routine",
+    "Forensische aandacht vereist",
+    "Hoog forensisch belang"
+  ],
+  "deathExamFlags": [
+    "Geen ademhaling",
+    "Geen circulatie",
+    "Geen neurologische respons",
+    "Geen pupilreactie",
+    "Tekenen van overlijden aanwezig",
+    "Uitwendige letsels aanwezig",
+    "Tekenen van trauma",
+    "Geen tekenen van leven"
+  ],
+  "forensicHandlingFlags": [
+    "Politie verwittigd",
+    "Forensische dienst verwittigd",
+    "Scene veiliggesteld",
+    "Lichaam gelabeld",
+    "Persoonlijke bezittingen geregistreerd",
+    "Mortuarium geïnformeerd",
+    "Documentatie voltooid",
+    "Fotoregistratie voorzien"
+  ],
+  "notificationFlags": [
+    "Familie verwittigd",
+    "Nabestaandenopvang voorzien",
+    "Bevoegde dienst verwittigd",
+    "Behandelend arts verwittigd",
+    "Command / leiding verwittigd",
+    "Dossier overgedragen",
+    "Autopsie besproken",
+    "Geen familie beschikbaar"
+  ],
+  "bodyDispositionOptions": [
+    "Niet gespecificeerd",
+    "Overdracht mortuarium",
+    "Overdracht forensische dienst",
+    "Overdracht politie / gerecht",
+    "Intern bewaarlokaal",
+    "Vrijgave na administratieve afhandeling"
+  ],
+  "baseCosts": [
+    {
+      "label": "Overlijdensvaststelling / forensische afhandeling - €2.000",
+      "value": 2000
+    },
+    {
+      "label": "Administratieve afhandeling overlijden - €1.200",
+      "value": 1200
+    }
+  ],
+  "supplements": [
+    {
+      "label": "Forensische handling",
+      "unitLabel": "€500 per dossier",
+      "cost": 500
+    },
+    {
+      "label": "Lichaamstransport intern",
+      "unitLabel": "€300 per verplaatsing",
+      "cost": 300
+    },
+    {
+      "label": "Chain of custody",
+      "unitLabel": "€200 per dossier",
+      "cost": 200
+    },
+    {
+      "label": "Autopsievoorbereiding",
+      "unitLabel": "€600 per dossier",
+      "cost": 600
+    },
+    {
+      "label": "Registratie persoonlijke bezittingen",
+      "unitLabel": "€150 per dossier",
+      "cost": 150
+    },
+    {
+      "label": "Nabestaandenopvang / extra afhandeling",
+      "unitLabel": "€250 per dossier",
+      "cost": 250
+    }
+  ]
+}
