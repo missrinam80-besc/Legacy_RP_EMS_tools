@@ -21,6 +21,9 @@ Statische rapporttool in HTML/CSS/JS/JSON, zonder database en geschikt voor GitH
 - kostprijs automatisch berekend
 - export naar `.txt`
 - export naar `.json`
+- automatische lokale autosave via `localStorage`
+- automatische herstel van vorige sessie in dezelfde browser
+- reset wist ook de lokale opslag van deze tool
 
 ## Publiceren op GitHub Pages
 
@@ -53,3 +56,13 @@ Pas `app.js` aan.
 
 Deze versie bevat bewust geen externe logging met geheime tokens in de frontend.
 Als je later toch logging wil, doe dat best via een aparte veilige relay.
+
+## Lokale opslag
+
+Deze tool gebruikt `localStorage` van de browser om formulierdata automatisch lokaal te bewaren.
+De gegevens blijven dus enkel op het toestel en in de browser van de gebruiker staan.
+
+Dat betekent:
+- geen database
+- geen verzending naar externe server
+- data blijft lokaal tot reset of manueel wissen van browseropslag
