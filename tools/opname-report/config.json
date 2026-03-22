@@ -1,0 +1,104 @@
+{
+  "reportType": "Opnameverslag",
+  "admissionTypeOptions": [
+    "Niet gespecificeerd",
+    "Observatie",
+    "Spoedopname",
+    "Geplande opname",
+    "Post-operatieve opname",
+    "Trauma-opname",
+    "Intensieve zorgen"
+  ],
+  "admissionPriorityOptions": [
+    "Niet gespecificeerd",
+    "Routine",
+    "Urgent",
+    "Kritiek"
+  ],
+  "dischargeExpectationOptions": [
+    "Niet gespecificeerd",
+    "Ontslag na observatie",
+    "Verdere opname op afdeling",
+    "Doorverwijzing naar OK",
+    "Doorverwijzing naar ICU",
+    "Overdracht aan andere dienst"
+  ],
+  "indications": [
+    "Pijncontrole",
+    "Neurologische observatie",
+    "Hemodynamische opvolging",
+    "Post-operatieve opvolging",
+    "Bijkomend labo-onderzoek",
+    "Beeldvorming gepland",
+    "Intraveneuze therapie",
+    "Wondzorg / verbandzorg",
+    "Respiratoire observatie",
+    "Mentale observatie"
+  ],
+  "monitoringPoints": [
+    "Vitals op vaste tijdstippen",
+    "Neurologische controles",
+    "Pijnscore opvolgen",
+    "Vochtbalans opvolgen",
+    "Bloedverlies opvolgen",
+    "Saturatie opvolgen",
+    "Wondcontrole",
+    "Mobilisatie evalueren",
+    "Temperatuur opvolgen",
+    "Inname medicatie controleren"
+  ],
+  "riskFlags": [
+    "Risico op verslechtering",
+    "Risico op bloeding",
+    "Risico op infectie",
+    "Risico op respiratoire problemen",
+    "Risico op agitatie",
+    "Risico op valincident",
+    "Allergieën gemeld",
+    "Chronische voorgeschiedenis relevant",
+    "Post-operatief risico",
+    "Beveiligde observatie nodig"
+  ],
+  "baseCosts": [
+    {
+      "label": "Opname / observatie - €1.500",
+      "value": 1500
+    },
+    {
+      "label": "Standaard observatie - €850",
+      "value": 850
+    }
+  ],
+  "supplements": [
+    {
+      "label": "Opnamedag",
+      "unitLabel": "€850 per dag",
+      "cost": 850
+    },
+    {
+      "label": "Monitoring intensief",
+      "unitLabel": "€400 per periode",
+      "cost": 400
+    },
+    {
+      "label": "Medicatiepakket",
+      "unitLabel": "€250 per pakket",
+      "cost": 250
+    },
+    {
+      "label": "Infuus / vochttherapie",
+      "unitLabel": "€300 per toepassing",
+      "cost": 300
+    },
+    {
+      "label": "Labo tijdens opname",
+      "unitLabel": "€400 per set",
+      "cost": 400
+    },
+    {
+      "label": "Zuurstof / respiratoire support",
+      "unitLabel": "€350 per toepassing",
+      "cost": 350
+    }
+  ]
+}
