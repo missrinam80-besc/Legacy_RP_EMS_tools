@@ -1,1 +1,294 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EMS Trauma Rapportgenerator</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="site-header">
+      <img src="Banner.png" alt="Pillbox Hill Medical Center" />
+    </header>
 
+    <section class="intro">
+      <h1>EMS Trauma Rapportgenerator</h1>
+      <p>
+        Statische webtool voor GitHub Pages. Geen database, geen backend, geen Google-koppeling.
+        Alle logica draait in HTML, CSS, JavaScript en JSON-configuratie.
+      </p>
+    </section>
+
+    <div class="layout">
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Invoer</h2>
+          <p>Vul de relevante velden in. Het rapport wordt automatisch opgebouwd.</p>
+        </div>
+
+        <div class="panel-body">
+          <form id="reportForm">
+            <div class="section">
+              <h3>Algemene basisgegevens</h3>
+              <small>Deze velden komen in elk trauma-rapport terug.</small>
+
+              <div class="grid">
+                <div class="field col-6">
+                  <label for="procedureType">Procedure / onderzoek</label>
+                  <input id="procedureType" name="procedureType" type="text" placeholder="bv. traumaopvang, wondzorg, spoedinterventie..." />
+                </div>
+
+                <div class="field col-6">
+                  <label for="dateTime">Datum & tijd</label>
+                  <input id="dateTime" name="dateTime" type="datetime-local" />
+                </div>
+
+                <div class="field col-4">
+                  <label for="patientName">Naam patiënt</label>
+                  <input id="patientName" name="patientName" type="text" placeholder="Voornaam Achternaam" />
+                </div>
+
+                <div class="field col-4">
+                  <label for="patientId">Patiënt-ID / CID</label>
+                  <input id="patientId" name="patientId" type="text" placeholder="ID of registratienummer" />
+                </div>
+
+                <div class="field col-4">
+                  <label for="location">Locatie</label>
+                  <input id="location" name="location" type="text" placeholder="Pillbox / incidentlocatie / spoed..." />
+                </div>
+
+                <div class="field col-6">
+                  <label for="staffLead">Behandelaar / rapporteur</label>
+                  <input id="staffLead" name="staffLead" type="text" placeholder="Naam + callsign" />
+                </div>
+
+                <div class="field col-6">
+                  <label for="staffAssist">Assistent(en)</label>
+                  <input id="staffAssist" name="staffAssist" type="text" placeholder="Optioneel" />
+                </div>
+              </div>
+            </div>
+
+            <div class="section">
+              <h3>Trauma — aanmelding en observatie</h3>
+              <small>Gebruik dit voor verwondingen, acute interventies en spoedprocedures.</small>
+
+              <div class="grid">
+                <div class="field">
+                  <label for="chiefComplaint">Aanmeldingsreden / klacht</label>
+                  <textarea id="chiefComplaint" name="chiefComplaint" placeholder="Waarom werd de patiënt gezien?"></textarea>
+                </div>
+
+                <div class="field">
+                  <label for="history">Context / mechanisme / voorgeschiedenis</label>
+                  <textarea id="history" name="history" placeholder="Mechanisme van letsel, allergieën, voorgeschiedenis, context..."></textarea>
+                </div>
+
+                <div class="field col-6">
+                  <label for="triage">Triage / urgentie</label>
+                  <select id="triage" name="triage"></select>
+                </div>
+
+                <div class="field col-6">
+                  <label for="painScore">Pijnscore (0-10)</label>
+                  <input id="painScore" name="painScore" type="number" min="0" max="10" step="1" placeholder="0-10" />
+                </div>
+
+                <div class="field">
+                  <label for="physicalExam">Klinische observaties / lichamelijk onderzoek</label>
+                  <textarea id="physicalExam" name="physicalExam" placeholder="Bewustzijn, ademhaling, bloeding, deformiteiten, neurologische tekens..."></textarea>
+                </div>
+              </div>
+            </div>
+
+            <div class="section">
+              <h3>Trauma — vitals</h3>
+              <small>MAP en shock index worden automatisch berekend wanneer voldoende gegevens ingevuld zijn.</small>
+
+              <div class="grid">
+                <div class="field col-3">
+                  <label for="sys">Systolische BD</label>
+                  <input id="sys" name="sys" type="number" min="0" placeholder="mmHg" />
+                </div>
+
+                <div class="field col-3">
+                  <label for="dia">Diastolische BD</label>
+                  <input id="dia" name="dia" type="number" min="0" placeholder="mmHg" />
+                </div>
+
+                <div class="field col-3">
+                  <label for="hr">Hartslag</label>
+                  <input id="hr" name="hr" type="number" min="0" placeholder="bpm" />
+                </div>
+
+                <div class="field col-3">
+                  <label for="rr">Ademhaling</label>
+                  <input id="rr" name="rr" type="number" min="0" placeholder="rpm" />
+                </div>
+
+                <div class="field col-3">
+                  <label for="spo2">SpO₂</label>
+                  <input id="spo2" name="spo2" type="number" min="0" max="100" placeholder="%" />
+                </div>
+
+                <div class="field col-3">
+                  <label for="temp">Temperatuur</label>
+                  <input id="temp" name="temp" type="number" step="0.1" placeholder="°C" />
+                </div>
+
+                <div class="field col-3">
+                  <label for="gcs">GCS</label>
+                  <input id="gcs" name="gcs" type="number" min="3" max="15" placeholder="3-15" />
+                </div>
+
+                <div class="field col-3">
+                  <label for="bloodLoss">Geschat bloedverlies</label>
+                  <input id="bloodLoss" name="bloodLoss" type="number" min="0" placeholder="ml" />
+                </div>
+              </div>
+            </div>
+
+            <div class="section">
+              <h3>Trauma — bevindingen en handelingen</h3>
+              <small>Vink aan wat van toepassing is en licht toe waar nodig.</small>
+
+              <div class="grid">
+                <div class="field">
+                  <span class="group-title">Bevindingen</span>
+                  <div id="findingsContainer" class="checkbox-grid"></div>
+                </div>
+
+                <div class="field">
+                  <span class="group-title">Uitgevoerde handelingen</span>
+                  <div id="actionsContainer" class="checkbox-grid"></div>
+                </div>
+
+                <div class="field">
+                  <label for="interventions">Procedureverloop</label>
+                  <textarea id="interventions" name="interventions" placeholder="Wat werd concreet gedaan en met welk effect?"></textarea>
+                </div>
+
+                <div class="field">
+                  <label for="medications">Toegediende medicatie / hulpmiddelen</label>
+                  <textarea id="medications" name="medications" placeholder="Naam, dosis, route, hulpmiddelen, verbandmateriaal..."></textarea>
+                </div>
+
+                <div class="field">
+                  <label for="diagnosis">Werkdiagnose / conclusie</label>
+                  <textarea id="diagnosis" name="diagnosis" placeholder="Medische conclusie of eindbeoordeling"></textarea>
+                </div>
+
+                <div class="field col-6">
+                  <label for="disposition">Eindstatus / afhandeling</label>
+                  <select id="disposition" name="disposition"></select>
+                </div>
+
+                <div class="field col-6">
+                  <label for="followUp">Follow-up / controle</label>
+                  <input id="followUp" name="followUp" type="text" placeholder="bv. controle na 24u" />
+                </div>
+
+                <div class="field">
+                  <label for="aftercare">Nazorg / instructies</label>
+                  <textarea id="aftercare" name="aftercare" placeholder="Rust, wondzorg, medicatie, alarmsymptomen..."></textarea>
+                </div>
+              </div>
+            </div>
+
+            <div class="section">
+              <h3>Ziekenhuiskosten</h3>
+              <small>Basistarief en supplementen. De totaalprijs wordt automatisch berekend.</small>
+
+              <div class="grid">
+                <div class="field col-6">
+                  <label for="baseCost">Basistarief</label>
+                  <select id="baseCost" name="baseCost"></select>
+                </div>
+
+                <div class="field col-6">
+                  <label for="customCost">Manuele correctie (€)</label>
+                  <input id="customCost" name="customCost" type="number" step="1" value="0" />
+                </div>
+
+                <div class="field">
+                  <span class="group-title">Supplementen</span>
+                  <div id="supplementsContainer" class="cost-grid"></div>
+                </div>
+
+                <div class="field">
+                  <label for="costNotes">Kostennotitie</label>
+                  <input id="costNotes" name="costNotes" type="text" placeholder="bv. intern event, vrijstelling, correctie..." />
+                </div>
+              </div>
+            </div>
+
+            <div class="section">
+              <h3>Extra notities</h3>
+              <small>Optioneel algemeen veld voor zaken die nergens anders passen.</small>
+
+              <div class="grid">
+                <div class="field">
+                  <label for="freeNotes">Extra notities</label>
+                  <textarea id="freeNotes" name="freeNotes" placeholder="Vrije notities"></textarea>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <aside class="output-wrap">
+        <section class="panel">
+          <div class="panel-header">
+            <h2>Output</h2>
+            <p>Het rapportveld is read-only en klaar om te kopiëren naar MDT, notitieveld of dossier.</p>
+          </div>
+
+          <div class="panel-body">
+            <div id="statusBox" class="status hidden"></div>
+
+            <div class="output-meta">
+              <div class="meta-card">
+                <strong>Automatische MAP</strong>
+                <span id="mapDisplay">—</span>
+              </div>
+
+              <div class="meta-card">
+                <strong>Shock index</strong>
+                <span id="shockDisplay">—</span>
+              </div>
+
+              <div class="meta-card">
+                <strong>Totaalkost</strong>
+                <span id="costDisplay">€0</span>
+              </div>
+            </div>
+
+            <textarea id="reportOutput" class="output" readonly></textarea>
+
+            <div class="actions">
+              <button type="button" class="btn-primary" id="copyBtn">Kopieer</button>
+              <button type="button" class="btn-secondary" id="downloadTxtBtn">Download .txt</button>
+              <button type="button" class="btn-secondary" id="downloadJsonBtn">Download .json</button>
+              <button type="button" class="btn-secondary" id="manualRefreshBtn">Herbouw rapport</button>
+              <button type="button" class="btn-danger" id="resetBtn">Reset alles</button>
+            </div>
+
+            <p class="note">
+              Deze versie werkt volledig lokaal in de browser en is geschikt voor GitHub Pages.
+            </p>
+
+            <div class="footer-note">
+              Externe logging is bewust niet standaard actief, zodat er geen geheime tokens of URLs in de frontend staan.
+            </div>
+          </div>
+        </section>
+      </aside>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
