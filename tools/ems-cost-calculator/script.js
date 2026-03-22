@@ -1,34 +1,19 @@
 /**
- * EMS Ziekenhuiskosten Calculator
- * --------------------------------
- * Deze tool werkt volledig client-side:
- * - Geen database
- * - Geen backend
- * - Prijzen worden geladen uit pricing.json
- * - Geschikt voor hosting via GitHub Pages
- *
- * Werking:
- * 1. pricing.json laden
- * 2. Formulier dynamisch opbouwen
- * 3. Selecties uitlezen
- * 4. Subtotalen en totaal berekenen
- * 5. Overzicht en compacte tekst genereren
+ * EMS Ziekenhuiskosten Calculator v2
+ * ----------------------------------
+ * Werkt volledig client-side.
+ * Geen database, geen backend.
+ * De dropdown bepaalt welke prijsitems zichtbaar zijn.
  */
 
 let pricingData = null;
 
-/**
- * Initialisatie zodra de pagina geladen is.
- */
 document.addEventListener("DOMContentLoaded", async () => {
   setTodayAsDefaultDate();
   bindStaticEvents();
   await loadPricing();
 });
 
-/**
- * Zet de datum standaard op vandaag.
- */
 function setTodayAsDefaultDate() {
   const dateInput = document.getElementById("visitDate");
   if (!dateInput) return;
@@ -40,10 +25,9 @@ function setTodayAsDefaultDate() {
   dateInput.value = `${yyyy}-${mm}-${dd}`;
 }
 
-/**
- * Koppel events aan statische knoppen en velden.
- */
 function bindStaticEvents() {
+  document.getElementById("visitType").addEventListener("change", handleVisitTypeChange);
+
   document.getElementById("copySummaryBtn").addEventListener("click", () => {
     copyTextareaValue("summaryOutput");
   });
@@ -54,19 +38,20 @@ function bindStaticEvents() {
 
   document.getElementById("resetBtn").addEventListener("click", resetForm);
 
-  document.getElementById("manualAdjustment").addEventListener("input", updateAll);
-  document.getElementById("adjustmentType").addEventListener("change", updateAll);
-  document.getElementById("currencySymbol").addEventListener("input", updateAll);
-
-  document.getElementById("patientName").addEventListener("input", updateAll);
-  document.getElementById("staffName").addEventListener("input", updateAll);
-  document.getElementById("visitDate").addEventListener("input", updateAll);
-  document.getElementById("notes").addEventListener("input", updateAll);
+  [
+    "manualAdjustment",
+    "adjustmentType",
+    "currencySymbol",
+    "patientName",
+    "staffName",
+    "visitDate",
+    "notes"
+  ].forEach((id) => {
+    document.getElementById(id).addEventListener("input", updateAll);
+    document.getElementById(id).addEventListener("change", updateAll);
+  });
 }
 
-/**
- * Laad pricing.json in.
- */
 async function loadPricing() {
   try {
     const response = await fetch("pricing.json");
@@ -81,7 +66,7 @@ async function loadPricing() {
     renderOptions("treatments", pricingData.treatments, "checkbox", "treatment");
     renderOptions("extras", pricingData.extras, "checkbox", "extra");
 
-    updateAll();
+    handleVisitTypeChange();
   } catch (error) {
     console.error(error);
     document.getElementById("summaryOutput").value =
@@ -91,14 +76,6 @@ async function loadPricing() {
   }
 }
 
-/**
- * Render een lijst van opties als radio buttons of checkboxes.
- *
- * @param {string} containerId - ID van de container
- * @param {Array} items - lijst met prijsitems
- * @param {string} inputType - "radio" of "checkbox"
- * @param {string} groupName - naam van de inputgroep
- */
 function renderOptions(containerId, items, inputType, groupName) {
   const container = document.getElementById(containerId);
   container.innerHTML = "";
@@ -106,8 +83,7 @@ function renderOptions(containerId, items, inputType, groupName) {
   items.forEach((item) => {
     const wrapper = document.createElement("div");
     wrapper.className = "option-card";
-
-    const checkedAttr = item.default ? "checked" : "";
+    wrapper.dataset.types = (item.types || []).join(",");
 
     wrapper.innerHTML = `
       <label>
@@ -117,7 +93,6 @@ function renderOptions(containerId, items, inputType, groupName) {
           value="${item.id}"
           data-price="${item.price}"
           data-label="${escapeHtml(item.label)}"
-          ${checkedAttr}
         />
         <span class="option-content">
           <span class="option-title">${escapeHtml(item.label)}</span>
@@ -134,57 +109,83 @@ function renderOptions(containerId, items, inputType, groupName) {
   });
 }
 
-/**
- * Haal geselecteerde inputitems op uit een container.
- *
- * @param {string} containerId
- * @returns {Array<{id: string, label: string, price: number}>}
- */
+function handleVisitTypeChange() {
+  const visitType = document.getElementById("visitType").value;
+
+  ["baseCosts", "exams", "treatments", "extras"].forEach((containerId) => {
+    filterOptionsByVisitType(containerId, visitType);
+  });
+
+  autoSelectDefaultBaseCost(visitType);
+  updateAll();
+}
+
+function filterOptionsByVisitType(containerId, visitType) {
+  const container = document.getElementById(containerId);
+  const cards = container.querySelectorAll(".option-card");
+
+  cards.forEach((card) => {
+    const types = (card.dataset.types || "").split(",").filter(Boolean);
+    const input = card.querySelector("input");
+
+    const isVisible = types.includes(visitType);
+
+    card.classList.toggle("hidden", !isVisible);
+
+    if (!isVisible && input) {
+      input.checked = false;
+    }
+  });
+}
+
+function autoSelectDefaultBaseCost(visitType) {
+  const baseInputs = document.querySelectorAll('#baseCosts input[type="radio"]');
+  let matched = false;
+
+  baseInputs.forEach((input) => {
+    const card = input.closest(".option-card");
+    if (!card || card.classList.contains("hidden")) return;
+
+    if (!matched) {
+      input.checked = true;
+      matched = true;
+    } else {
+      input.checked = false;
+    }
+  });
+}
+
 function getSelectedItems(containerId) {
   const container = document.getElementById(containerId);
   const selected = [];
 
   container.querySelectorAll("input:checked").forEach((input) => {
-    selected.push({
-      id: input.value,
-      label: input.dataset.label,
-      price: Number(input.dataset.price || 0)
-    });
+    const card = input.closest(".option-card");
+    if (card && !card.classList.contains("hidden")) {
+      selected.push({
+        id: input.value,
+        label: input.dataset.label,
+        price: Number(input.dataset.price || 0)
+      });
+    }
   });
 
   return selected;
 }
 
-/**
- * Tel de prijzen van een lijst items op.
- *
- * @param {Array<{price:number}>} items
- * @returns {number}
- */
 function calculateSubtotal(items) {
   return items.reduce((sum, item) => sum + item.price, 0);
 }
 
-/**
- * Lees de manuele correctie uit.
- *
- * @returns {number}
- */
 function getAdjustmentValue() {
   const rawValue = Number(document.getElementById("manualAdjustment").value || 0);
   const type = document.getElementById("adjustmentType").value;
-
-  if (type === "subtract") {
-    return -Math.abs(rawValue);
-  }
-
-  return Math.abs(rawValue);
+  return type === "subtract" ? -Math.abs(rawValue) : Math.abs(rawValue);
 }
 
-/**
- * Werk alle subtotalen, totaalbedrag en tekstuitvoer bij.
- */
 function updateAll() {
+  const visitTypeLabel = document.getElementById("visitType").selectedOptions[0].textContent;
+
   const baseItems = getSelectedItems("baseCosts");
   const examItems = getSelectedItems("exams");
   const treatmentItems = getSelectedItems("treatments");
@@ -211,6 +212,7 @@ function updateAll() {
   document.getElementById("grandTotal").textContent = formatMoney(grandTotal);
 
   generateSummaryOutput({
+    visitTypeLabel,
     baseItems,
     examItems,
     treatmentItems,
@@ -224,9 +226,6 @@ function updateAll() {
   });
 }
 
-/**
- * Genereer het uitgebreide overzicht en de compacte tekst.
- */
 function generateSummaryOutput(data) {
   const patientName = document.getElementById("patientName").value.trim();
   const staffName = document.getElementById("staffName").value.trim();
@@ -234,18 +233,15 @@ function generateSummaryOutput(data) {
   const notes = document.getElementById("notes").value.trim();
 
   const summaryLines = [];
-
   summaryLines.push("KOSTENOVERZICHT ZIEKENHUISBEZOEK");
   summaryLines.push("");
+  summaryLines.push(`Type bezoek: ${data.visitTypeLabel}`);
 
   if (patientName) summaryLines.push(`Patiënt / ID: ${patientName}`);
   if (staffName) summaryLines.push(`EMS-medewerker / arts: ${staffName}`);
   if (visitDate) summaryLines.push(`Datum: ${visitDate}`);
   if (notes) summaryLines.push(`Notitie: ${notes}`);
-
-  if (patientName || staffName || visitDate || notes) {
-    summaryLines.push("");
-  }
+  summaryLines.push("");
 
   summaryLines.push("Basiskost:");
   summaryLines.push(...formatItemLines(data.baseItems));
@@ -268,10 +264,8 @@ function generateSummaryOutput(data) {
   summaryLines.push("");
 
   summaryLines.push(`Correctie: ${formatMoney(data.adjustment)}`);
-  summaryLines.push("");
   summaryLines.push(`TOTAAL: ${formatMoney(data.grandTotal)}`);
 
-  const compactParts = [];
   const allSelectedLabels = [
     ...data.baseItems.map((item) => item.label),
     ...data.examItems.map((item) => item.label),
@@ -279,61 +273,33 @@ function generateSummaryOutput(data) {
     ...data.extraItems.map((item) => item.label)
   ];
 
-  if (allSelectedLabels.length > 0) {
-    compactParts.push(`Ziekenhuiskosten berekend op basis van ${allSelectedLabels.join(", ")}`);
-  } else {
-    compactParts.push("Ziekenhuiskosten berekend zonder geselecteerde kostenposten");
+  let compact = `Kosten berekend voor ${data.visitTypeLabel}`;
+  if (allSelectedLabels.length) {
+    compact += ` op basis van ${allSelectedLabels.join(", ")}`;
   }
-
   if (data.adjustment !== 0) {
-    compactParts.push(`met een correctie van ${formatMoney(data.adjustment)}`);
+    compact += `, met correctie van ${formatMoney(data.adjustment)}`;
   }
-
-  compactParts.push(`Totaalbedrag: ${formatMoney(data.grandTotal)}.`);
-
+  compact += `. Totaalbedrag: ${formatMoney(data.grandTotal)}.`;
   if (notes) {
-    compactParts.push(`Notitie: ${notes}.`);
+    compact += ` Notitie: ${notes}.`;
   }
 
   document.getElementById("summaryOutput").value = summaryLines.join("\n");
-  document.getElementById("compactOutput").value = compactParts.join(". ").replace(/\.\./g, ".");
+  document.getElementById("compactOutput").value = compact;
 }
 
-/**
- * Format lijnen voor een lijst van items.
- *
- * @param {Array<{label:string, price:number}>} items
- * @returns {string[]}
- */
 function formatItemLines(items) {
-  if (!items.length) {
-    return ["- Geen"];
-  }
-
+  if (!items.length) return ["- Geen"];
   return items.map((item) => `- ${item.label}: ${formatMoney(item.price)}`);
 }
 
-/**
- * Geldbedrag formatteren volgens gekozen symbool.
- *
- * @param {number} value
- * @returns {string}
- */
 function formatMoney(value) {
-  const currencySymbol =
-    document.getElementById("currencySymbol")?.value?.trim() || "$";
-
+  const currencySymbol = document.getElementById("currencySymbol")?.value?.trim() || "$";
   const sign = value < 0 ? "-" : "";
-  const absoluteValue = Math.abs(value);
-
-  return `${sign}${currencySymbol}${absoluteValue}`;
+  return `${sign}${currencySymbol}${Math.abs(value)}`;
 }
 
-/**
- * Kopieer de inhoud van een textarea.
- *
- * @param {string} textareaId
- */
 async function copyTextareaValue(textareaId) {
   const textarea = document.getElementById(textareaId);
   if (!textarea || !textarea.value) return;
@@ -342,15 +308,13 @@ async function copyTextareaValue(textareaId) {
     await navigator.clipboard.writeText(textarea.value);
     alert("Tekst gekopieerd naar klembord.");
   } catch (error) {
-    console.error("Kopiëren mislukt:", error);
+    console.error(error);
     alert("Kopiëren mislukt.");
   }
 }
 
-/**
- * Reset het volledige formulier.
- */
 function resetForm() {
+  document.getElementById("visitType").value = "standard";
   document.getElementById("patientName").value = "";
   document.getElementById("staffName").value = "";
   document.getElementById("notes").value = "";
@@ -360,23 +324,13 @@ function resetForm() {
 
   setTodayAsDefaultDate();
 
-  document.querySelectorAll('#baseCosts input[type="radio"]').forEach((input) => {
+  document.querySelectorAll('input[type="checkbox"], input[type="radio"]').forEach((input) => {
     input.checked = false;
   });
 
-  document.querySelectorAll('#exams input[type="checkbox"], #treatments input[type="checkbox"], #extras input[type="checkbox"]').forEach((input) => {
-    input.checked = false;
-  });
-
-  updateAll();
+  handleVisitTypeChange();
 }
 
-/**
- * Beveiliging voor labels in HTML.
- *
- * @param {string} value
- * @returns {string}
- */
 function escapeHtml(value) {
   return String(value)
     .replaceAll("&", "&amp;")
