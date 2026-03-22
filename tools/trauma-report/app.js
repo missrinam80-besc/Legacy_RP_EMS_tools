@@ -14,7 +14,7 @@ let appConfig = null;
  * Unieke sleutel voor lokale opslag in de browser.
  * Pas dit alleen aan als je bewust een nieuwe opslagversie wil starten.
  */
-const STORAGE_KEY = "ems_trauma_rapportgenerator_v1";
+const STORAGE_KEY = "ems_tool_trauma_report_v1";
 
 const form = document.getElementById("reportForm");
 const output = document.getElementById("reportOutput");
