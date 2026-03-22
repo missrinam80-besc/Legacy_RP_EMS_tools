@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>EMS | Ziekenhuiskosten Calculator</title>
+  <title>EMS | Ziekenhuiskosten Calculator v2</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -11,8 +11,8 @@
     <div class="brand-wrap">
       <div class="brand-badge">EMS</div>
       <div>
-        <h1>Ziekenhuiskosten Calculator</h1>
-        <p class="subtitle">Bereken snel en overzichtelijk de kosten van een ziekenhuisbezoek</p>
+        <h1>Ziekenhuiskosten Calculator v2</h1>
+        <p class="subtitle">Kosten berekenen per type ziekenhuisbezoek</p>
       </div>
     </div>
   </header>
@@ -23,6 +23,22 @@
 
       <div class="grid grid-2">
         <div class="field">
+          <label for="visitType">Type bezoek / rapport</label>
+          <select id="visitType">
+            <option value="standard">Standaard consult</option>
+            <option value="emergency">Spoed / trauma</option>
+            <option value="admission">Opname</option>
+            <option value="surgery">Operatie</option>
+            <option value="death">Overlijden / doodverklaring</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="visitDate">Datum</label>
+          <input type="date" id="visitDate" />
+        </div>
+
+        <div class="field">
           <label for="patientName">Patiëntnaam / ID</label>
           <input type="text" id="patientName" placeholder="Bijv. 204 - John Doe" />
         </div>
@@ -32,14 +48,9 @@
           <input type="text" id="staffName" placeholder="Bijv. Dr. Smith" />
         </div>
 
-        <div class="field">
-          <label for="visitDate">Datum</label>
-          <input type="date" id="visitDate" />
-        </div>
-
-        <div class="field">
+        <div class="field field-full">
           <label for="notes">Extra notitie</label>
-          <input type="text" id="notes" placeholder="Bijv. trauma na verkeersongeval" />
+          <input type="text" id="notes" placeholder="Bijv. verkeersongeval, steekwonde, controle na opname..." />
         </div>
       </div>
     </section>
@@ -58,19 +69,18 @@
 
     <section class="card">
       <h2>3. Behandelingen</h2>
-      <p class="helper">Vink alle uitgevoerde behandelingen aan.</p>
+      <p class="helper">Vink alle relevante behandelingen aan.</p>
       <div id="treatments" class="options-group"></div>
     </section>
 
     <section class="card">
       <h2>4. Extra’s</h2>
-      <p class="helper">Optionele kosten zoals transport of nazorg.</p>
+      <p class="helper">Optionele of aanvullende kosten.</p>
       <div id="extras" class="options-group"></div>
     </section>
 
     <section class="card">
       <h2>5. Correctie</h2>
-
       <div class="grid grid-3">
         <div class="field">
           <label for="manualAdjustment">Manuele correctie</label>
