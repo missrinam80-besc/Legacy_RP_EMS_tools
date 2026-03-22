@@ -102,3 +102,14 @@ body {
   line-height: 1.5;
   color: var(--muted);
 }
+
+.tools-section {
+  margin: 40px 0;
+}
+
+.section-title {
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+  border-left: 4px solid #fe0100;
+  padding-left: 10px;
+}
