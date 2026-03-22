@@ -1,24 +1,20 @@
 /**
  * EMS Trauma Rapportgenerator
  * ----------------------------------------
- * Volledig statische versie voor GitHub Pages.
- * Geen database, geen backend, geen externe API nodig.
+ * Veilige statische versie voor GitHub Pages
+ * met localStorage autosave.
  *
- * Bestanden:
- * - index.html
- * - styles.css
- * - config.json
- * - app.js
- *
- * Deze tool:
- * - leest configuratie uit config.json
- * - bouwt selecties, checkboxen en kostenvelden dynamisch op
- * - genereert automatisch een trauma-rapport
- * - berekent MAP, shock index en kosten
- * - laat export toe naar TXT en JSON
+ * Geen database, geen backend, geen externe API.
+ * Alle data blijft lokaal in de browser van de gebruiker.
  */
 
 let appConfig = null;
+
+/**
+ * Unieke sleutel voor lokale opslag in de browser.
+ * Pas dit alleen aan als je bewust een nieuwe opslagversie wil starten.
+ */
+const STORAGE_KEY = "ems_trauma_rapportgenerator_v1";
 
 const form = document.getElementById("reportForm");
 const output = document.getElementById("reportOutput");
@@ -66,7 +62,7 @@ function formatDateTime(input) {
 }
 
 /**
- * Nette rapport-opmaak.
+ * Ruim overmatige lege lijnen op in de output.
  */
 function clean(text) {
   return text.replace(/\n{3,}/g, "\n\n").trim();
@@ -88,7 +84,7 @@ function line(label, value) {
 }
 
 /**
- * Geld formatteren.
+ * Formatteer geld in euro.
  */
 function formatMoney(value) {
   return new Intl.NumberFormat("nl-BE", {
@@ -338,6 +334,111 @@ ${line("Totaal te factureren", formatMoney(costData.total))}
 }
 
 /**
+ * Verzamel alle formulierdata.
+ */
+function getAllFormData() {
+  const result = {};
+
+  const textFields = form.querySelectorAll("input, textarea, select");
+
+  textFields.forEach((field) => {
+    if (field.type === "checkbox") return;
+    if (!field.id) return;
+
+    result[field.id] = field.value;
+  });
+
+  result.findings = getChecked("findings");
+  result.actions = getChecked("actions");
+
+  result.supplements = Array.from(document.querySelectorAll(".cost-input")).map((input) => ({
+    label: input.dataset.label,
+    quantity: Number(input.value || 0),
+    unitCost: Number(input.dataset.cost || 0)
+  }));
+
+  return result;
+}
+
+/**
+ * Sla alle formulierdata lokaal op in localStorage.
+ */
+function saveToLocalStorage() {
+  try {
+    const payload = {
+      savedAt: new Date().toISOString(),
+      formData: getAllFormData()
+    };
+
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+  } catch (error) {
+    console.error("Opslaan in localStorage mislukt:", error);
+  }
+}
+
+/**
+ * Herstel formulierdata vanuit localStorage.
+ */
+function restoreFromLocalStorage() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return false;
+
+    const parsed = JSON.parse(raw);
+    const data = parsed?.formData;
+
+    if (!data || typeof data !== "object") return false;
+
+    Object.entries(data).forEach(([key, value]) => {
+      if (key === "findings" || key === "actions" || key === "supplements") return;
+
+      const field = document.getElementById(key);
+      if (!field) return;
+
+      field.value = value ?? "";
+    });
+
+    if (Array.isArray(data.findings)) {
+      document.querySelectorAll('input[name="findings"]').forEach((checkbox) => {
+        checkbox.checked = data.findings.includes(checkbox.value);
+      });
+    }
+
+    if (Array.isArray(data.actions)) {
+      document.querySelectorAll('input[name="actions"]').forEach((checkbox) => {
+        checkbox.checked = data.actions.includes(checkbox.value);
+      });
+    }
+
+    if (Array.isArray(data.supplements)) {
+      const supplementInputs = Array.from(document.querySelectorAll(".cost-input"));
+
+      data.supplements.forEach((savedItem, index) => {
+        const input = supplementInputs[index];
+        if (!input) return;
+        input.value = Number(savedItem.quantity || 0);
+      });
+    }
+
+    return true;
+  } catch (error) {
+    console.error("Herstellen uit localStorage mislukt:", error);
+    return false;
+  }
+}
+
+/**
+ * Wis lokale opslag van deze tool.
+ */
+function clearLocalStorageData() {
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch (error) {
+    console.error("Wissen van localStorage mislukt:", error);
+  }
+}
+
+/**
  * Kopieer rapport naar klembord.
  */
 async function copyReport() {
@@ -353,7 +454,7 @@ async function copyReport() {
 }
 
 /**
- * Download bestand.
+ * Download een bestand.
  */
 function downloadFile(filename, content, mimeType) {
   const blob = new Blob([content], { type: mimeType });
@@ -404,39 +505,6 @@ function downloadJson() {
 }
 
 /**
- * Verzamel alle formulierdata.
- */
-function getAllFormData() {
-  const formData = new FormData(form);
-  const result = {};
-
-  for (const [key, value] of formData.entries()) {
-    if (result[key]) {
-      if (Array.isArray(result[key])) {
-        result[key].push(value);
-      } else {
-        result[key] = [result[key], value];
-      }
-    } else {
-      result[key] = value;
-    }
-  }
-
-  result.findings = getChecked("findings");
-  result.actions = getChecked("actions");
-
-  document.querySelectorAll(".cost-input").forEach((input, index) => {
-    result[`supplement_${index + 1}`] = {
-      label: input.dataset.label,
-      quantity: Number(input.value || 0),
-      unitCost: Number(input.dataset.cost || 0)
-    };
-  });
-
-  return result;
-}
-
-/**
  * Maak veilige bestandsdatumstring.
  */
 function buildFileTimestamp() {
@@ -452,23 +520,6 @@ function buildFileTimestamp() {
 }
 
 /**
- * Reset formulier.
- */
-function resetForm() {
-  form.reset();
-
-  document.querySelectorAll(".cost-input").forEach((input) => {
-    input.value = 0;
-  });
-
-  document.getElementById("customCost").value = 0;
-  setDefaultDateTime();
-
-  clearStatus();
-  generateReport();
-}
-
-/**
  * Zet datum/tijd standaard op nu.
  */
 function setDefaultDateTime() {
@@ -477,6 +528,44 @@ function setDefaultDateTime() {
     .slice(0, 16);
 
   document.getElementById("dateTime").value = nowLocal;
+}
+
+/**
+ * Reset volledig formulier en lokale opslag.
+ */
+function resetForm() {
+  form.reset();
+
+  document.querySelectorAll(".cost-input").forEach((input) => {
+    input.value = 0;
+  });
+
+  document.querySelectorAll('input[name="findings"]').forEach((checkbox) => {
+    checkbox.checked = false;
+  });
+
+  document.querySelectorAll('input[name="actions"]').forEach((checkbox) => {
+    checkbox.checked = false;
+  });
+
+  document.getElementById("customCost").value = 0;
+  setDefaultDateTime();
+
+  clearLocalStorageData();
+  clearStatus();
+  generateReport();
+
+  showStatus("Formulier en lokale opslag werden gereset.");
+}
+
+/**
+ * Centrale updatefunctie:
+ * - herbouw rapport
+ * - sla automatisch lokaal op
+ */
+function handleFormUpdate() {
+  generateReport();
+  saveToLocalStorage();
 }
 
 /**
@@ -501,8 +590,10 @@ async function initApp() {
 
     setDefaultDateTime();
 
-    form.addEventListener("input", generateReport);
-    form.addEventListener("change", generateReport);
+    const restored = restoreFromLocalStorage();
+
+    form.addEventListener("input", handleFormUpdate);
+    form.addEventListener("change", handleFormUpdate);
     copyBtn.addEventListener("click", copyReport);
     downloadTxtBtn.addEventListener("click", downloadTxt);
     downloadJsonBtn.addEventListener("click", downloadJson);
@@ -510,7 +601,12 @@ async function initApp() {
     manualRefreshBtn.addEventListener("click", generateReport);
 
     generateReport();
-    showStatus("Tool succesvol geladen.");
+
+    if (restored) {
+      showStatus("Vorige lokale sessie werd automatisch hersteld.");
+    } else {
+      showStatus("Tool succesvol geladen.");
+    }
   } catch (error) {
     console.error(error);
     showStatus(`Fout bij laden van de tool: ${error.message}`, "error");
