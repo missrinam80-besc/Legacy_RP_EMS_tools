@@ -1,68 +1,34 @@
-# EMS Rapportgenerator
+# EMS Trauma Rapportgenerator
 
-Statische rapporttool in HTML/CSS/JS/JSON, zonder database en geschikt voor GitHub Pages.
+Trauma-rapporttool binnen de multi-tool EMS GitHub-repository.
 
 ## Bestanden
 
-- `index.html` → de interface
-- `styles.css` → de styling
-- `app.js` → de logica
+- `index.html` → interface van de tool
+- `styles.css` → styling van de tool
+- `app.js` → logica, berekeningen en autosave
 - `config.json` → configureerbare opties en kosten
-- `Banner.png` → headerafbeelding
+- `README.md` → uitleg per tool
 
 ## Kenmerken
 
 - geen database
 - geen backend
-- geen Google nodig
-- werkt op GitHub Pages
-- rapport automatisch opgebouwd
-- MAP en shock index automatisch berekend
-- kostprijs automatisch berekend
+- geen externe logging
+- geschikt voor GitHub Pages
+- automatische rapportopbouw
+- automatische berekening van MAP
+- automatische berekening van shock index
+- automatische kostberekening
 - export naar `.txt`
 - export naar `.json`
 - automatische lokale autosave via `localStorage`
 - automatische herstel van vorige sessie in dezelfde browser
-- reset wist ook de lokale opslag van deze tool
+- aparte opslag per tool via unieke storage key
+- knop om alleen lokale opslag te wissen
+- reset wist zowel formulier als lokale opslag
 
-## Publiceren op GitHub Pages
+## Pad binnen de repo
 
-1. Maak een nieuwe repository aan.
-2. Upload deze bestanden in de root van de repo.
-3. Voeg ook `Banner.png` toe.
-4. Ga naar **Settings** → **Pages**.
-5. Kies branch `main` en folder `/root`.
-6. Sla op.
-7. Je tool staat daarna online via GitHub Pages.
-
-## Aanpassen
-
-### Opties wijzigen
-Pas `config.json` aan voor:
-- triage-opties
-- eindstatus-opties
-- bevindingen
-- handelingen
-- basistarieven
-- supplementen
-
-### Styling wijzigen
-Pas `styles.css` aan.
-
-### Logica uitbreiden
-Pas `app.js` aan.
-
-## Opmerking
-
-Deze versie bevat bewust geen externe logging met geheime tokens in de frontend.
-Als je later toch logging wil, doe dat best via een aparte veilige relay.
-
-## Lokale opslag
-
-Deze tool gebruikt `localStorage` van de browser om formulierdata automatisch lokaal te bewaren.
-De gegevens blijven dus enkel op het toestel en in de browser van de gebruiker staan.
-
-Dat betekent:
-- geen database
-- geen verzending naar externe server
-- data blijft lokaal tot reset of manueel wissen van browseropslag
+```text
+tools/trauma-report/
