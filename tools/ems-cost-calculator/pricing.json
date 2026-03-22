@@ -1,0 +1,34 @@
+{
+  "baseCosts": [
+    { "id": "standard_checkin", "label": "Standaard check-in", "price": 500, "default": true },
+    { "id": "emergency_intake", "label": "Spoedopname", "price": 850 },
+    { "id": "hospital_admission", "label": "Opname", "price": 1200 },
+    { "id": "surgery_room", "label": "Gebruik operatiekamer", "price": 1500 },
+    { "id": "observation", "label": "Observatie", "price": 700 }
+  ],
+  "exams": [
+    { "id": "blood_test", "label": "Bloedonderzoek", "price": 250 },
+    { "id": "dna_test", "label": "DNA-onderzoek", "price": 400 },
+    { "id": "toxicology", "label": "Toxicologisch onderzoek", "price": 450 },
+    { "id": "infection_test", "label": "Infectie-onderzoek", "price": 300 },
+    { "id": "allergy_test", "label": "Allergie-onderzoek", "price": 275 },
+    { "id": "xray", "label": "X-ray", "price": 300 },
+    { "id": "mri", "label": "MRI / scan", "price": 650 }
+  ],
+  "treatments": [
+    { "id": "wound_care", "label": "Wondzorg", "price": 200 },
+    { "id": "sutures", "label": "Hechten", "price": 300 },
+    { "id": "bandage", "label": "Verband / drukverband", "price": 120 },
+    { "id": "cast", "label": "Gips", "price": 450 },
+    { "id": "pain_medication", "label": "Pijnmedicatie", "price": 150 },
+    { "id": "iv", "label": "Infuus", "price": 175 },
+    { "id": "surgery", "label": "Chirurgische ingreep", "price": 1800 },
+    { "id": "resuscitation", "label": "Reanimatie", "price": 1500 }
+  ],
+  "extras": [
+    { "id": "ambulance", "label": "Ambulancevervoer", "price": 600 },
+    { "id": "psych_followup", "label": "Psychologische opvolging", "price": 250 },
+    { "id": "aftercare", "label": "Nazorg", "price": 150 },
+    { "id": "specialist_consult", "label": "Specialistisch consult", "price": 350 }
+  ]
+}
