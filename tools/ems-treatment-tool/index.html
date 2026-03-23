@@ -1,65 +1,125 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>EMS Behandelingstool</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <div class="app-shell">
+    <header class="site-header">
+      <div class="brand-block">
+        <h1 id="appTitle">EMS Behandelingstool</h1>
+        <p id="appSubtitle">Slimme beslissingshulp voor wondzorg en interventies</p>
+      </div>
+    </header>
 
-<div class="app">
-  <header>
-    <h1 id="appTitle">EMS Behandelingstool</h1>
-    <p id="appSubtitle"></p>
-  </header>
+    <main class="layout">
+      <section class="panel panel-input">
+        <div class="panel-heading">
+          <h2>Invoer</h2>
+          <p>Vul vitale functies en letsels per lichaamsdeel in.</p>
+        </div>
 
-  <div class="container">
+        <div class="section-card">
+          <h3>Algemene patiëntstatus</h3>
 
-    <!-- INPUT -->
-    <div class="panel">
+          <div class="form-grid form-grid-2">
+            <div class="field">
+              <label for="heartRate">Hartslag / pols</label>
+              <input type="number" id="heartRate" min="0" placeholder="bv. 88" />
+            </div>
 
-      <h2>Patiëntstatus</h2>
+            <div class="field">
+              <label for="bloodPressure">Bloeddruk</label>
+              <input type="text" id="bloodPressure" placeholder="bv. 120/80" />
+            </div>
 
-      <label>Hartslag / pols</label>
-      <input type="number" id="heartRate">
+            <div class="field">
+              <label for="temperature">Lichaamstemperatuur</label>
+              <input type="number" id="temperature" step="0.1" placeholder="bv. 37.0" />
+            </div>
 
-      <label>Bloeddruk</label>
-      <input type="text" id="bloodPressure" placeholder="120/80">
+            <div class="field">
+              <label for="painLevel">Pijnlevel</label>
+              <select id="painLevel"></select>
+            </div>
 
-      <label>Lichaamstemperatuur</label>
-      <input type="number" id="temperature" step="0.1">
+            <div class="field">
+              <label for="bloodLoss">Bloedverlies</label>
+              <select id="bloodLoss"></select>
+            </div>
+          </div>
+        </div>
 
-      <label>Pijnlevel</label>
-      <select id="painLevel"></select>
+        <div class="section-card">
+          <div class="section-head-inline">
+            <h3>Letsels per lichaamsdeel</h3>
+            <button type="button" class="secondary-btn small-btn" id="expandAllBtn">Alles openen/sluiten</button>
+          </div>
+          <div id="bodyPartsContainer" class="bodyparts-stack"></div>
+        </div>
 
-      <label>Bloedverlies</label>
-      <select id="bloodLoss"></select>
+        <div class="actions-row">
+          <button type="button" class="primary-btn" id="analyzeBtn">Analyseer behandeling</button>
+          <button type="button" class="secondary-btn" id="resetBtn">Reset formulier</button>
+        </div>
+      </section>
 
-      <h2>Letsels per lichaamsdeel</h2>
-      <div id="bodyPartsContainer"></div>
+      <section class="panel panel-output">
+        <div class="panel-heading">
+          <h2>Resultaat</h2>
+          <p>Behandeladvies op basis van ingevoerde letsels, vitale functies en symptomen.</p>
+        </div>
 
-      <button onclick="analyze()">Analyseer</button>
+        <div class="result-block urgency-block">
+          <div class="result-label">Urgentie</div>
+          <div id="urgencyBadge" class="urgency-badge urgency-green">Nog geen analyse</div>
+          <p id="urgencyReason" class="muted-text">Vul de gegevens in en klik op analyseren.</p>
+        </div>
 
-    </div>
+        <div class="result-block">
+          <h3>Behandeling per lichaamsdeel</h3>
+          <div id="perLimbOutput" class="result-content empty-state">
+            Nog geen analyse beschikbaar.
+          </div>
+        </div>
 
-    <!-- OUTPUT -->
-    <div class="panel">
+        <div class="result-block">
+          <h3>Algemene behandeling</h3>
+          <div id="generalOutput" class="result-content empty-state">
+            Nog geen analyse beschikbaar.
+          </div>
+        </div>
 
-      <h2>Resultaat</h2>
+        <div class="result-block">
+          <h3>Waarschuwingen</h3>
+          <div id="warningsOutput" class="result-content empty-state">
+            Nog geen analyse beschikbaar.
+          </div>
+        </div>
 
-      <div id="urgency"></div>
-      <div id="treatment"></div>
-      <div id="general"></div>
-      <div id="warnings"></div>
+        <div class="result-block">
+          <h3>Benodigd materiaal & medicatie</h3>
+          <div id="materialsOutput" class="result-content empty-state">
+            Nog geen analyse beschikbaar.
+          </div>
+        </div>
 
-      <button onclick="copyResult()">Kopieer</button>
-      <button onclick="downloadResult()">Download</button>
+        <div class="actions-row">
+          <button type="button" class="primary-btn" id="copyBtn">Kopieer samenvatting</button>
+          <button type="button" class="secondary-btn" id="downloadBtn">Download .txt</button>
+        </div>
 
-    </div>
-
+        <div class="result-block">
+          <h3>Samenvatting</h3>
+          <textarea id="summaryText" class="summary-box" readonly></textarea>
+        </div>
+      </section>
+    </main>
   </div>
-</div>
 
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
