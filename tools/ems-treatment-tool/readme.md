@@ -1,19 +1,16 @@
-# EMS Behandelingsadviseur
+# EMS Behandelingstool
 
-Statische webtool voor GitHub Pages.
-
-## Bestanden
-- `index.html` → structuur van de tool
-- `style.css` → styling in dezelfde donkere EMS card-stijl
-- `data.js` → vaste letsel-, verband- en hulpmiddeldata
-- `script.js` → alle logica en outputgeneratie
+## Werking
+Deze tool helpt EMS-medewerkers bij het bepalen van de juiste behandeling.
 
 ## Gebruik
-1. Open `index.html` lokaal of via GitHub Pages.
-2. Vul de patiëntstatus in.
-3. Duid letsels en fracturen aan per lichaamsdeel.
-4. Klik op **Analyseer behandeling**.
-5. Kopieer of download de samenvatting.
+1. Vul patiëntgegevens in
+2. Selecteer letsels per lichaamsdeel
+3. Klik op analyseer
 
-## Belangrijke noot
-Deze tool is een RP-beslissingshulp en geen echte medische software.
+## Aanpassen
+Alle instellingen zitten in config.json:
+- wondtypes
+- pijnlevels
+- bloedverlies
+- lichaamsdelen
