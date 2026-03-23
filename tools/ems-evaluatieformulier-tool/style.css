@@ -1,0 +1,270 @@
+:root {
+  --page-bg: #ececec;
+  --card-bg: #ffffff;
+  --card-soft: #f7f7f7;
+  --line: #d6d6d6;
+  --text: #1d1d1d;
+  --muted: #666666;
+  --brand: #a70000;
+  --brand-dark: #7c0000;
+  --brand-soft: #f7e4e4;
+  --success-soft: #edf7ed;
+  --shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+  --radius: 16px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Georgia, "Times New Roman", serif;
+  background: var(--page-bg);
+  color: var(--text);
+}
+
+.app-shell {
+  min-height: 100vh;
+}
+
+.site-header {
+  background: linear-gradient(135deg, #8f0000, #b40000);
+  color: #ffffff;
+  padding: 40px 20px;
+  box-shadow: var(--shadow);
+}
+
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.eyebrow {
+  margin: 0 0 8px 0;
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.9;
+}
+
+.site-header h1 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.subtitle {
+  margin: 12px 0 0 0;
+  max-width: 760px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.page-content {
+  max-width: 1200px;
+  margin: 24px auto;
+  padding: 0 20px 32px;
+  display: grid;
+  gap: 24px;
+}
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 22px;
+}
+
+.card-header {
+  margin-bottom: 18px;
+}
+
+.card-header h2 {
+  margin: 0 0 8px 0;
+  font-size: 1.35rem;
+  color: var(--brand-dark);
+}
+
+.card-header p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.field label {
+  font-weight: bold;
+  color: #2a2a2a;
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px 14px;
+  font: inherit;
+  color: var(--text);
+  background: #fff;
+}
+
+.field textarea {
+  resize: vertical;
+  min-height: 110px;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus,
+.output-text:focus {
+  outline: 2px solid rgba(167, 0, 0, 0.18);
+  border-color: var(--brand);
+}
+
+.full-width {
+  grid-column: 1 / -1;
+}
+
+.section-divider {
+  margin-top: 6px;
+  padding: 16px;
+  background: var(--card-soft);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+.section-divider h3 {
+  margin: 0 0 6px 0;
+  color: var(--brand-dark);
+}
+
+.section-divider p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.score-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.summary-box {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(220px, 1fr));
+  gap: 16px;
+  margin-top: 4px;
+}
+
+.summary-item {
+  background: var(--brand-soft);
+  border: 1px solid #e0bcbc;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.summary-item span {
+  display: block;
+  font-size: 0.95rem;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.summary-item strong {
+  font-size: 1.15rem;
+  color: var(--brand-dark);
+}
+
+.button-row,
+.output-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.sticky-actions {
+  position: sticky;
+  top: 12px;
+  z-index: 5;
+}
+
+.btn {
+  appearance: none;
+  border: 1px solid var(--line);
+  background: #ffffff;
+  color: var(--text);
+  border-radius: 12px;
+  padding: 12px 18px;
+  font: inherit;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.btn-primary {
+  background: var(--brand);
+  border-color: var(--brand);
+  color: #ffffff;
+}
+
+.btn-primary:hover {
+  background: var(--brand-dark);
+  border-color: var(--brand-dark);
+}
+
+.btn-danger {
+  background: #fff3f3;
+  border-color: #efc4c4;
+  color: #8f0000;
+}
+
+.output-text {
+  width: 100%;
+  min-height: 360px;
+  margin-top: 16px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px;
+  font: inherit;
+  line-height: 1.55;
+  background: #fcfcfc;
+  color: var(--text);
+  resize: vertical;
+}
+
+@media (max-width: 900px) {
+  .form-grid,
+  .score-grid,
+  .summary-box {
+    grid-template-columns: 1fr;
+  }
+
+  .site-header h1 {
+    font-size: 1.7rem;
+  }
+
+  .card {
+    padding: 18px;
+  }
+}
