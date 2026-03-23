@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EMS Evaluatieformulier Tool</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">EMS Tools Hub</p>
+        <h1>Evaluatieformulier Tool</h1>
+        <p class="hero-text">
+          Maak snel een gestructureerde evaluatie voor medewerkers, trainees of afdelingsleden.
+          Deze tool werkt volledig lokaal in de browser, zonder database.
+        </p>
+      </div>
+      <div class="hero-actions">
+        <button id="btnCopyReport" class="btn btn-primary" type="button">Kopieer evaluatie</button>
+        <button id="btnDownloadTxt" class="btn btn-secondary" type="button">Download .txt</button>
+        <button id="btnReset" class="btn btn-ghost" type="button">Reset</button>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Evaluatiegegevens</h2>
+          <p>Vul de basisgegevens in van de evaluatie en de betrokken medewerker.</p>
+        </div>
+
+        <form id="evaluationForm" class="form-grid">
+          <div class="field">
+            <label for="employeeName">Naam medewerker</label>
+            <input id="employeeName" name="employeeName" type="text" placeholder="Bijv. Alex Vermeulen" />
+          </div>
+
+          <div class="field">
+            <label for="employeeRank">Rang / functie</label>
+            <input id="employeeRank" name="employeeRank" type="text" placeholder="Bijv. Paramedic / Trainee / Surgeon" />
+          </div>
+
+          <div class="field">
+            <label for="department">Afdeling</label>
+            <select id="department" name="department">
+              <option value="">Kies een afdeling</option>
+              <option>Ambulance & Spoed</option>
+              <option>Chirurgie</option>
+              <option>Rescue Team</option>
+              <option>Psychologie</option>
+              <option>Orthopedie / Revalidatie</option>
+              <option>Command / Staf</option>
+              <option>Algemeen</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="evaluationType">Type evaluatie</label>
+            <select id="evaluationType" name="evaluationType">
+              <option value="">Kies een type</option>
+              <option>Proefperiode</option>
+              <option>Periodieke evaluatie</option>
+              <option>FTO / begeleiding</option>
+              <option>Promotie-evaluatie</option>
+              <option>Verbetertraject</option>
+              <option>Terugkoppeling na incident</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="evaluatorName">Evaluator</label>
+            <input id="evaluatorName" name="evaluatorName" type="text" placeholder="Bijv. Captain Lisa Jacobs" />
+          </div>
+
+          <div class="field">
+            <label for="evaluationDate">Evaluatiedatum</label>
+            <input id="evaluationDate" name="evaluationDate" type="date" />
+          </div>
+
+          <div class="field field-span-2">
+            <label for="period">Periode / context</label>
+            <input id="period" name="period" type="text" placeholder="Bijv. Februari 2026 - Maart 2026 / na 3 weken stage" />
+          </div>
+
+          <div class="field field-span-2">
+            <label for="attendance">Opmerkingen aanwezigheid / inzet</label>
+            <textarea id="attendance" name="attendance" rows="3" placeholder="Bijv. regelmatig aanwezig, neemt shiften op, communiceert afwezigheden correct"></textarea>
+          </div>
+        </form>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Beoordelingscriteria</h2>
+          <p>Geef per onderdeel een score van 1 tot 5. De tool berekent automatisch het gemiddelde.</p>
+        </div>
+
+        <div class="criteria-grid" id="criteriaGrid"></div>
+
+        <div class="score-summary">
+          <div class="score-card">
+            <span class="score-label">Gemiddelde score</span>
+            <strong id="averageScore">0.0 / 5</strong>
+          </div>
+          <div class="score-card">
+            <span class="score-label">Eindbeoordeling</span>
+            <strong id="scoreVerdict">Nog niet bepaald</strong>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel panel-full">
+        <div class="panel-header">
+          <h2>Inhoudelijke feedback</h2>
+          <p>Gebruik korte, duidelijke observaties. Deze worden mee verwerkt in de evaluatietekst.</p>
+        </div>
+
+        <div class="form-grid">
+          <div class="field field-span-2">
+            <label for="strengths">Sterke punten</label>
+            <textarea id="strengths" name="strengths" rows="4" placeholder="Bijv. blijft rustig onder druk, correcte communicatie met patiënten en dispatch"></textarea>
+          </div>
+
+          <div class="field field-span-2">
+            <label for="improvements">Werkpunten / aandachtspunten</label>
+            <textarea id="improvements" name="improvements" rows="4" placeholder="Bijv. meer structuur in rapportage, sneller medische prioriteiten bepalen"></textarea>
+          </div>
+
+          <div class="field field-span-2">
+            <label for="goals">Concrete doelen voor volgende periode</label>
+            <textarea id="goals" name="goals" rows="4" placeholder="Bijv. 3 begeleide ambulanceritten afronden, trauma-rapporten consequenter invullen"></textarea>
+          </div>
+
+          <div class="field field-span-2">
+            <label for="finalAdvice">Eindadvies / beslissing</label>
+            <select id="finalAdvice" name="finalAdvice">
+              <option value="">Kies een eindadvies</option>
+              <option>Positief - verderzetten</option>
+              <option>Positief met werkpunten</option>
+              <option>Extra opvolging nodig</option>
+              <option>Verbetertraject opstarten</option>
+              <option>Nog niet klaar voor promotie</option>
+              <option>Klaar voor meer verantwoordelijkheid</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel panel-full">
+        <div class="panel-header">
+          <h2>Gegenereerde evaluatie</h2>
+          <p>Deze tekst kan je rechtstreeks kopiëren naar een notitie, dossier of intern systeem.</p>
+        </div>
+
+        <textarea id="reportOutput" class="report-output" rows="18" readonly></textarea>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
