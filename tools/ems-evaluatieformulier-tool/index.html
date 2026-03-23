@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EMS Evaluatieformulier</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="site-header">
+      <div class="header-content">
+        <p class="eyebrow">Pillbox Hill Medical Center</p>
+        <h1>Evaluatieformulier</h1>
+        <p class="subtitle">
+          Interne tool voor functionerings- en evaluatiegesprekken binnen EMS.
+        </p>
+      </div>
+    </header>
+
+    <main class="page-content">
+      <section class="card">
+        <div class="card-header">
+          <h2>Evaluatiegegevens</h2>
+          <p>Vul hieronder alle relevante gegevens van de evaluatie in.</p>
+        </div>
+
+        <form id="evaluationForm" class="form-grid">
+          <div class="field">
+            <label for="employeeName">Naam medewerker</label>
+            <input type="text" id="employeeName" placeholder="Bijv. Alex Morgan" />
+          </div>
+
+          <div class="field">
+            <label for="employeeCallsign">Roepnummer medewerker</label>
+            <input type="text" id="employeeCallsign" placeholder="Bijv. 204" />
+          </div>
+
+          <div class="field">
+            <label for="employeeRank">Rang medewerker</label>
+            <input type="text" id="employeeRank" placeholder="Bijv. Paramedic" />
+          </div>
+
+          <div class="field">
+            <label for="department">Afdeling</label>
+            <select id="department">
+              <option value="">Selecteer afdeling</option>
+              <option>Ambulance & Spoedgevallen</option>
+              <option>Chirurgie</option>
+              <option>Opleiding</option>
+              <option>Rescue Team</option>
+              <option>Psychologie</option>
+              <option>Orthopedie / Revalidatie</option>
+              <option>Algemeen</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="evaluationType">Type evaluatie</label>
+            <select id="evaluationType">
+              <option value="">Selecteer type</option>
+              <option>Proefperiode</option>
+              <option>Functioneringsgesprek</option>
+              <option>Periodieke evaluatie</option>
+              <option>Verbetertraject</option>
+              <option>Promotiebeoordeling</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="evaluationDate">Datum evaluatie</label>
+            <input type="date" id="evaluationDate" />
+          </div>
+
+          <div class="field">
+            <label for="evaluatorName">Naam evaluator</label>
+            <input type="text" id="evaluatorName" placeholder="Bijv. Jamie Carter" />
+          </div>
+
+          <div class="field">
+            <label for="evaluatorRank">Rang evaluator</label>
+            <input type="text" id="evaluatorRank" placeholder="Bijv. Lieutenant" />
+          </div>
+
+          <div class="field full-width">
+            <label for="periodCovered">Beoordeelde periode</label>
+            <input type="text" id="periodCovered" placeholder="Bijv. Januari 2026 - Maart 2026" />
+          </div>
+
+          <div class="section-divider full-width">
+            <h3>Beoordelingscriteria</h3>
+            <p>Geef per onderdeel een score van 1 tot 5.</p>
+          </div>
+
+          <div class="score-grid full-width">
+            <div class="field">
+              <label for="scoreProfessional">Professionaliteit</label>
+              <select id="scoreProfessional" class="score-input">
+                <option value="">-</option>
+                <option value="1">1 - Onvoldoende</option>
+                <option value="2">2 - Matig</option>
+                <option value="3">3 - Voldoende</option>
+                <option value="4">4 - Goed</option>
+                <option value="5">5 - Uitstekend</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="scoreCommunication">Communicatie</label>
+              <select id="scoreCommunication" class="score-input">
+                <option value="">-</option>
+                <option value="1">1 - Onvoldoende</option>
+                <option value="2">2 - Matig</option>
+                <option value="3">3 - Voldoende</option>
+                <option value="4">4 - Goed</option>
+                <option value="5">5 - Uitstekend</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="scoreTeamwork">Teamwork</label>
+              <select id="scoreTeamwork" class="score-input">
+                <option value="">-</option>
+                <option value="1">1 - Onvoldoende</option>
+                <option value="2">2 - Matig</option>
+                <option value="3">3 - Voldoende</option>
+                <option value="4">4 - Goed</option>
+                <option value="5">5 - Uitstekend</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="scoreKnowledge">Medische kennis / vakkennis</label>
+              <select id="scoreKnowledge" class="score-input">
+                <option value="">-</option>
+                <option value="1">1 - Onvoldoende</option>
+                <option value="2">2 - Matig</option>
+                <option value="3">3 - Voldoende</option>
+                <option value="4">4 - Goed</option>
+                <option value="5">5 - Uitstekend</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="scoreProtocol">Protocolkennis & opvolging</label>
+              <select id="scoreProtocol" class="score-input">
+                <option value="">-</option>
+                <option value="1">1 - Onvoldoende</option>
+                <option value="2">2 - Matig</option>
+                <option value="3">3 - Voldoende</option>
+                <option value="4">4 - Goed</option>
+                <option value="5">5 - Uitstekend</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="scoreInitiative">Zelfstandigheid & initiatief</label>
+              <select id="scoreInitiative" class="score-input">
+                <option value="">-</option>
+                <option value="1">1 - Onvoldoende</option>
+                <option value="2">2 - Matig</option>
+                <option value="3">3 - Voldoende</option>
+                <option value="4">4 - Goed</option>
+                <option value="5">5 - Uitstekend</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="summary-box full-width">
+            <div class="summary-item">
+              <span>Gemiddelde score</span>
+              <strong id="averageScore">-</strong>
+            </div>
+            <div class="summary-item">
+              <span>Eindbeoordeling</span>
+              <strong id="finalVerdict">Nog niet berekend</strong>
+            </div>
+          </div>
+
+          <div class="field full-width">
+            <label for="strengths">Sterke punten</label>
+            <textarea id="strengths" rows="4" placeholder="Beschrijf hier de belangrijkste sterke punten van de medewerker."></textarea>
+          </div>
+
+          <div class="field full-width">
+            <label for="improvements">Werkpunten</label>
+            <textarea id="improvements" rows="4" placeholder="Beschrijf hier de werkpunten of aandachtspunten."></textarea>
+          </div>
+
+          <div class="field full-width">
+            <label for="goals">Afspraken / doelstellingen</label>
+            <textarea id="goals" rows="4" placeholder="Beschrijf de concrete afspraken of doelstellingen voor de volgende periode."></textarea>
+          </div>
+
+          <div class="field full-width">
+            <label for="generalNotes">Algemene opmerkingen</label>
+            <textarea id="generalNotes" rows="5" placeholder="Extra toelichting, context of samenvatting van het gesprek."></textarea>
+          </div>
+        </form>
+      </section>
+
+      <section class="card sticky-actions">
+        <div class="card-header">
+          <h2>Acties</h2>
+          <p>Bereken, bewaar of exporteer de evaluatie.</p>
+        </div>
+
+        <div class="button-row">
+          <button type="button" class="btn btn-primary" id="generateBtn">Genereer evaluatie</button>
+          <button type="button" class="btn" id="saveDraftBtn">Bewaar concept</button>
+          <button type="button" class="btn" id="loadDraftBtn">Laad concept</button>
+          <button type="button" class="btn btn-danger" id="clearBtn">Leegmaken</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card-header">
+          <h2>Gegenereerde evaluatie</h2>
+          <p>Deze tekst kan gebruikt worden voor dossier, MDT of intern verslag.</p>
+        </div>
+
+        <div class="output-actions">
+          <button type="button" class="btn" id="copyBtn">Kopieer tekst</button>
+          <button type="button" class="btn" id="downloadBtn">Download .txt</button>
+        </div>
+
+        <textarea id="outputText" class="output-text" readonly placeholder="De evaluatietekst verschijnt hier na het genereren."></textarea>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
