@@ -1,30 +1,227 @@
 {
   "appTitle": "EMS Behandelingstool",
-  "appSubtitle": "Beslissingshulp voor medische interventies",
-
+  "appSubtitle": "Slimme beslissingshulp voor medische interventies op basis van letsels, vitale functies en symptomen.",
   "bodyParts": [
-    "linkerarm",
-    "rechterarm",
-    "linkerbeen",
-    "rechterbeen",
-    "hoofd",
-    "romp"
+    { "key": "leftArm", "label": "Linkerarm" },
+    { "key": "rightArm", "label": "Rechterarm" },
+    { "key": "leftLeg", "label": "Linkerbeen" },
+    { "key": "rightLeg", "label": "Rechterbeen" },
+    { "key": "head", "label": "Hoofd" },
+    { "key": "torso", "label": "Rompgedeelte" }
   ],
-
-  "painLevels": ["licht", "gemiddeld", "hoog", "extreem"],
-  "bloodLossLevels": ["licht", "gemiddeld", "hoog", "extreem"],
-
+  "painLevels": [
+    { "value": "licht", "label": "Licht", "score": 1 },
+    { "value": "gemiddeld", "label": "Gemiddeld", "score": 2 },
+    { "value": "hoog", "label": "Hoog", "score": 3 },
+    { "value": "extreem", "label": "Extreem", "score": 4 }
+  ],
+  "bloodLossLevels": [
+    { "value": "licht", "label": "Licht", "score": 1 },
+    { "value": "gemiddeld", "label": "Gemiddeld", "score": 2 },
+    { "value": "hoog", "label": "Hoog", "score": 3 },
+    { "value": "extreem", "label": "Extreem", "score": 4 }
+  ],
+  "woundOptions": [
+    { "value": "abrasion", "label": "Schaafwonde" },
+    { "value": "avulsion", "label": "Avulsie / afgescheurd weefsel" },
+    { "value": "contusion", "label": "Kneuzing" },
+    { "value": "crush", "label": "Crush / verpletteringsletsel" },
+    { "value": "cut", "label": "Snijwonde" },
+    { "value": "laceration", "label": "Scheurwonde" },
+    { "value": "lowvelocitywound", "label": "Kogelwonde lage snelheid" },
+    { "value": "mediumvelocitywound", "label": "Kogelwonde medium snelheid" },
+    { "value": "highvelocitywound", "label": "Kogelwonde hoge snelheid" },
+    { "value": "velocitywound", "label": "Kogelwonde / shotgun explosief" },
+    { "value": "puncturewound", "label": "Steekwonde" },
+    { "value": "burn", "label": "Brandwonde" }
+  ],
   "wounds": {
-    "abrasion": { "bleeding": 0, "pain": 1, "needSewing": false },
-    "cut": { "bleeding": 0.5, "pain": 1, "needSewing": true },
-    "laceration": { "bleeding": 0.5, "pain": 2, "needSewing": true },
-    "puncturewound": { "bleeding": 0.7, "pain": 1, "needSewing": true },
-    "burn": { "bleeding": 0, "pain": 2, "needSewing": false },
-    "highvelocitywound": { "bleeding": 1, "pain": 3, "needSewing": true }
+    "abrasion": {
+      "bleeding": 0.0,
+      "pain": 0.5,
+      "needSewing": false,
+      "reopeningTime": 60,
+      "keywords": ["oppervlakkig", "schaafletsel"]
+    },
+    "avulsion": {
+      "bleeding": 0.05,
+      "pain": 1.0,
+      "needSewing": true,
+      "reopeningTime": 60,
+      "keywords": ["weefselverlies", "ernstige wond"]
+    },
+    "contusion": {
+      "bleeding": 0.0,
+      "pain": 1.0,
+      "needSewing": false,
+      "reopeningTime": 60,
+      "keywords": ["kneuzing", "stomp trauma"]
+    },
+    "crush": {
+      "bleeding": 0.08,
+      "pain": 2.0,
+      "needSewing": false,
+      "reopeningTime": 60,
+      "keywords": ["verplettering", "stomp trauma"],
+      "causeLimping": true,
+      "causeStaggering": true
+    },
+    "cut": {
+      "bleeding": 0.05,
+      "pain": 0.5,
+      "needSewing": true,
+      "reopeningTime": 60,
+      "keywords": ["snijletsel"]
+    },
+    "laceration": {
+      "bleeding": 0.05,
+      "pain": 2.0,
+      "needSewing": true,
+      "reopeningTime": 160,
+      "keywords": ["scheurletsel"]
+    },
+    "lowvelocitywound": {
+      "bleeding": 0.1,
+      "pain": 3.0,
+      "needSewing": true,
+      "reopeningTime": 60,
+      "keywords": ["projectiel", "kogelwonde"]
+    },
+    "mediumvelocitywound": {
+      "bleeding": 0.5,
+      "pain": 3.0,
+      "needSewing": true,
+      "reopeningTime": 60,
+      "keywords": ["ernstige kogelwonde", "projectiel"]
+    },
+    "highvelocitywound": {
+      "bleeding": 0.7,
+      "pain": 3.0,
+      "needSewing": true,
+      "reopeningTime": 60,
+      "keywords": ["zware kogelwonde", "projectiel"]
+    },
+    "velocitywound": {
+      "bleeding": 0.3,
+      "pain": 3.0,
+      "needSewing": true,
+      "reopeningTime": 60,
+      "keywords": ["kogelwonde", "shotgun", "explosief"]
+    },
+    "puncturewound": {
+      "bleeding": 0.3,
+      "pain": 1.0,
+      "needSewing": true,
+      "reopeningTime": 60,
+      "keywords": ["steekwonde", "penetrerend letsel"]
+    },
+    "burn": {
+      "bleeding": 0.0,
+      "pain": 2.0,
+      "needSewing": false,
+      "reopeningTime": 60,
+      "keywords": ["thermisch letsel", "temperatuur"]
+    }
   },
-
-  "bandages": {
-    "field_dressing": { "abrasion": 0.7, "cut": 0.9 },
-    "quick_clot": { "puncturewound": 0.9, "highvelocitywound": 0.9 }
+  "fractures": {
+    "head": { "pain": 15, "warning": "Mogelijke schedel- of hoofdfractuur." },
+    "leftArm": { "pain": 15, "warning": "Mogelijke armfractuur links." },
+    "rightArm": { "pain": 15, "warning": "Mogelijke armfractuur rechts." },
+    "leftLeg": { "pain": 15, "warning": "Mogelijke beenfractuur links." },
+    "rightLeg": { "pain": 15, "warning": "Mogelijke beenfractuur rechts." },
+    "torso": { "pain": 15, "warning": "Mogelijk ernstig stomp of intern torsoletsel." }
+  },
+  "bandages": [
+    {
+      "itemName": "field_dressing",
+      "label": "Field dressing",
+      "effectivenessModifiers": {
+        "abrasion": 0.7,
+        "avulsion": 0.8,
+        "contusion": 1.0,
+        "crush": 0.9,
+        "cut": 0.9,
+        "laceration": 0.1,
+        "velocitywound": 0.5,
+        "lowvelocitywound": 0.5,
+        "mediumvelocitywound": 0.5,
+        "highvelocitywound": 0.5,
+        "puncturewound": 0.7,
+        "burn": 0.7
+      }
+    },
+    {
+      "itemName": "elastic_bandage",
+      "label": "Elastic bandage",
+      "effectivenessModifiers": {
+        "abrasion": 0.7,
+        "avulsion": 0.6,
+        "contusion": 1.0,
+        "crush": 0.7,
+        "cut": 0.7,
+        "laceration": 0.7,
+        "velocitywound": 0.6,
+        "lowvelocitywound": 0.5,
+        "mediumvelocitywound": 0.5,
+        "highvelocitywound": 0.5,
+        "puncturewound": 0.6,
+        "burn": 0.9
+      }
+    },
+    {
+      "itemName": "quick_clot",
+      "label": "Quick clot",
+      "effectivenessModifiers": {
+        "abrasion": 0.85,
+        "avulsion": 0.8,
+        "contusion": 1.0,
+        "crush": 0.6,
+        "cut": 0.6,
+        "laceration": 0.8,
+        "velocitywound": 0.8,
+        "lowvelocitywound": 0.5,
+        "mediumvelocitywound": 0.5,
+        "highvelocitywound": 0.5,
+        "puncturewound": 0.7,
+        "burn": 0.4
+      }
+    },
+    {
+      "itemName": "packing_bandage",
+      "label": "Packing bandage",
+      "effectivenessModifiers": {
+        "abrasion": 0.7,
+        "avulsion": 0.6,
+        "contusion": 1.0,
+        "crush": 0.7,
+        "cut": 0.7,
+        "laceration": 0.7,
+        "velocitywound": 0.6,
+        "lowvelocitywound": 0.5,
+        "mediumvelocitywound": 0.5,
+        "highvelocitywound": 0.5,
+        "puncturewound": 0.7,
+        "burn": 0.4
+      }
+    }
+  ],
+  "medications": {
+    "tourniquet": { "label": "Tourniquet" },
+    "sewing_kit": { "label": "Sewing kit / hechtset" },
+    "morphine": { "label": "Morphine", "maxDose": 3 },
+    "epinephrine": { "label": "Epinephrine", "maxDose": 5 },
+    "blood250ml": { "label": "Bloed 250 ml" },
+    "blood500ml": { "label": "Bloed 500 ml" },
+    "saline250ml": { "label": "Saline 250 ml" },
+    "saline500ml": { "label": "Saline 500 ml" },
+    "propofol": { "label": "Propofol" }
+  },
+  "thresholds": {
+    "heartRateHigh": 120,
+    "heartRateCritical": 140,
+    "bloodPressureLowSystolic": 95,
+    "bloodPressureCriticalSystolic": 85,
+    "temperatureLow": 35.0,
+    "temperatureHigh": 39.0
   }
 }
