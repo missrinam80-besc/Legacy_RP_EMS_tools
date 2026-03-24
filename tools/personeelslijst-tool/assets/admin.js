@@ -22,7 +22,7 @@ function bindEvents() {
 }
 
 async function loadRows() {
-  showMessage('Lijst laden...', 'success');
+  showMessage('Personeelslijst wordt geladen...', 'success');
 
   try {
     const response = await fetch(`${API_URL}?action=list`);
@@ -34,7 +34,7 @@ async function loadRows() {
 
     staffRows = Array.isArray(data.rows) ? data.rows : [];
     applyFilter();
-    showMessage('Personeelslijst geladen.', 'success');
+    showMessage('Personeelslijst is geladen.', 'success');
   } catch (err) {
     showMessage(err.message || 'Fout bij laden.', 'error');
   }
@@ -70,7 +70,7 @@ function renderTable() {
     return;
   }
 
-  tableBody.innerHTML = filteredRows.map((row, index) => {
+  tableBody.innerHTML = filteredRows.map((row) => {
     const realIndex = staffRows.findIndex(item => String(item.roepnummer) === String(row.roepnummer));
 
     return `
@@ -164,7 +164,7 @@ async function saveRows() {
   }
 
   try {
-    showMessage('Opslaan bezig...', 'success');
+    showMessage('Personeelslijst wordt opgeslagen...', 'success');
 
     const response = await fetch(API_URL, {
       method: 'POST',
@@ -182,7 +182,7 @@ async function saveRows() {
       throw new Error(data.message || 'Opslaan mislukt.');
     }
 
-    showMessage('Personeelslijst opgeslagen.', 'success');
+    showMessage('Personeelslijst is opgeslagen.', 'success');
     loadRows();
   } catch (err) {
     showMessage(err.message || 'Fout bij opslaan.', 'error');
