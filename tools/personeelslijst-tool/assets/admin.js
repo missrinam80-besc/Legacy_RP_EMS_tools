@@ -72,7 +72,7 @@ function renderTable() {
   if (!filteredRows.length) {
     tableBody.innerHTML = `
       <tr>
-        <td colspan="7" class="empty-state">Geen resultaten gevonden.</td>
+        <td colspan="6" class="empty-state">Geen resultaten gevonden.</td>
       </tr>
     `;
     return;
@@ -102,11 +102,6 @@ function renderTable() {
         </td>
         <td class="checkbox-cell">
           <input type="checkbox" ${row.is_active ? 'checked' : ''} data-index="${realIndex}" data-field="is_active">
-        </td>
-        <td>
-          <div class="row-actions">
-            <button type="button" class="danger" onclick="removeRow(${realIndex})">Verwijderen</button>
-          </div>
         </td>
       </tr>
     `;
@@ -162,12 +157,6 @@ function addRow() {
     is_active: true
   });
 
-  applyFilter();
-}
-
-function removeRow(index) {
-  if (index < 0 || index >= staffRows.length) return;
-  staffRows.splice(index, 1);
   applyFilter();
 }
 
