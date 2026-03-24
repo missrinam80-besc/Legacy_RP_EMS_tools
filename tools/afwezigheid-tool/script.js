@@ -11,7 +11,7 @@
  * - Gebruik dit dus enkel als testoplossing of vervang dit later door een kleine relay/proxy.
  */
 
-const DISCORD_WEBHOOK_URL = "PLAK_HIER_JE_DISCORD_WEBHOOK_URL";
+const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1481738745760976967/GeLaYb4WLNxYls-rslbSqz8eekLzl12Yus0Ng3GKcjvzxTvXLac5pWhKb_149GmsLU_1";
 
 const form = document.getElementById("absenceForm");
 const typeAfwezigheid = document.getElementById("typeAfwezigheid");
