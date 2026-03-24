@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EMS Afwezigheidsmelding</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app-shell">
+    <section class="card">
+      <div class="card-header">
+        <h1>Afwezigheidsmelding</h1>
+        <p>
+          Gebruik dit formulier om een afwezigheid door te geven. De melding wordt
+          automatisch doorgestuurd naar het daarvoor voorziene Discordkanaal.
+        </p>
+      </div>
+
+      <form id="absenceForm" novalidate>
+        <div class="form-grid">
+          <div class="field">
+            <label for="naam">Naam</label>
+            <input
+              type="text"
+              id="naam"
+              name="naam"
+              placeholder="Bijv. Jan Peeters"
+              required
+            />
+          </div>
+
+          <div class="field">
+            <label for="roepnummer">Roepnummer</label>
+            <input
+              type="text"
+              id="roepnummer"
+              name="roepnummer"
+              placeholder="Bijv. 204"
+              required
+            />
+          </div>
+
+          <div class="field">
+            <label for="typeAfwezigheid">Type afwezigheid</label>
+            <select id="typeAfwezigheid" name="typeAfwezigheid" required>
+              <option value="">Kies een type</option>
+              <option value="Verlof">Verlof</option>
+              <option value="Ziekte">Ziekte</option>
+              <option value="Andere">Andere</option>
+            </select>
+          </div>
+
+          <div class="field hidden" id="andereTypeWrapper">
+            <label for="andereType">Specifieer andere afwezigheid</label>
+            <input
+              type="text"
+              id="andereType"
+              name="andereType"
+              placeholder="Bijv. familiale omstandigheden"
+            />
+          </div>
+
+          <div class="field">
+            <label for="beginDatum">Begindatum</label>
+            <input type="date" id="beginDatum" name="beginDatum" required />
+          </div>
+
+          <div class="field">
+            <label for="eindDatum">Einddatum</label>
+            <input type="date" id="eindDatum" name="eindDatum" required />
+          </div>
+
+          <div class="field field-full">
+            <label for="reden">Reden / toelichting</label>
+            <textarea
+              id="reden"
+              name="reden"
+              rows="5"
+              placeholder="Geef hier een korte toelichting..."
+              required
+            ></textarea>
+          </div>
+        </div>
+
+        <div class="status-box" id="statusBox" aria-live="polite"></div>
+
+        <div class="actions">
+          <button type="submit" id="submitBtn">Melding verzenden</button>
+          <button type="reset" class="secondary">Leegmaken</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
