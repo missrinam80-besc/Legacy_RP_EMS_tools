@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EMS Personeelslijst</title>
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="page-header">
+      <h1>EMS Personeelslijst</h1>
+      <p>Overzicht van actieve medewerkers.</p>
+    </header>
+
+    <section class="toolbar card">
+      <div class="toolbar-left">
+        <input type="text" id="searchInput" placeholder="Zoek op roepnummer, naam, rang, afdeling..." />
+      </div>
+      <div class="toolbar-right">
+        <button id="loadBtn" type="button">Vernieuwen</button>
+      </div>
+    </section>
+
+    <section class="card table-card">
+      <div class="table-wrap">
+        <table id="staffTable">
+          <thead>
+            <tr>
+              <th>Roepnummer</th>
+              <th>Naam</th>
+              <th>Rang</th>
+              <th>Afdeling</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="staffTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <div id="messageBox" class="message"></div>
+  </div>
+
+  <script>
+    const API_URL = 'https://script.google.com/macros/s/AKfycbw2kNYykn-uWDfNSlbIlmFaM65lhw3bb-AlEndYbqde9muCBhiPH8IaziM203GxArPTuQ/exec';
+  </script>
+  <script src="assets/view.js"></script>
+</body>
+</html>
