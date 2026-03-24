@@ -1,6 +1,8 @@
 let staffRows = [];
 let filteredRows = [];
 
+const STATUS_OPTIONS = ['actief', 'non-actief', 'verlof'];
+
 const tableBody = document.getElementById('staffTableBody');
 const searchInput = document.getElementById('searchInput');
 const actorInput = document.getElementById('actorInput');
@@ -32,7 +34,13 @@ async function loadRows() {
       throw new Error(data.message || 'Laden mislukt.');
     }
 
-    staffRows = Array.isArray(data.rows) ? data.rows : [];
+    staffRows = Array.isArray(data.rows)
+      ? data.rows.map(row => ({
+          ...row,
+          status: normalizeStatus(row.status)
+        }))
+      : [];
+
     applyFilter();
     showMessage('Personeelslijst is geladen.', 'success');
   } catch (err) {
@@ -75,11 +83,23 @@ function renderTable() {
 
     return `
       <tr>
-        <td><input class="table-input" type="text" value="${escapeHtml(row.roepnummer || '')}" data-index="${realIndex}" data-field="roepnummer"></td>
-        <td><input class="table-input" type="text" value="${escapeHtml(row.naam || '')}" data-index="${realIndex}" data-field="naam"></td>
-        <td><input class="table-input" type="text" value="${escapeHtml(row.rang || '')}" data-index="${realIndex}" data-field="rang"></td>
-        <td><input class="table-input" type="text" value="${escapeHtml(row.afdeling || '')}" data-index="${realIndex}" data-field="afdeling"></td>
-        <td><input class="table-input" type="text" value="${escapeHtml(row.status || '')}" data-index="${realIndex}" data-field="status"></td>
+        <td>
+          <input class="table-input" type="text" value="${escapeHtml(row.roepnummer || '')}" data-index="${realIndex}" data-field="roepnummer">
+        </td>
+        <td>
+          <input class="table-input" type="text" value="${escapeHtml(row.naam || '')}" data-index="${realIndex}" data-field="naam">
+        </td>
+        <td>
+          <input class="table-input" type="text" value="${escapeHtml(row.rang || '')}" data-index="${realIndex}" data-field="rang">
+        </td>
+        <td>
+          <input class="table-input" type="text" value="${escapeHtml(row.afdeling || '')}" data-index="${realIndex}" data-field="afdeling">
+        </td>
+        <td>
+          <select class="table-select" data-index="${realIndex}" data-field="status">
+            ${renderStatusOptions(row.status)}
+          </select>
+        </td>
         <td class="checkbox-cell">
           <input type="checkbox" ${row.is_active ? 'checked' : ''} data-index="${realIndex}" data-field="is_active">
         </td>
@@ -95,14 +115,23 @@ function renderTable() {
   bindTableInputs();
 }
 
+function renderStatusOptions(currentStatus) {
+  const normalized = normalizeStatus(currentStatus);
+
+  return STATUS_OPTIONS.map(status => `
+    <option value="${status}" ${status === normalized ? 'selected' : ''}>${status}</option>
+  `).join('');
+}
+
 function bindTableInputs() {
-  document.querySelectorAll('#staffTableBody input[data-field]').forEach(input => {
+  document.querySelectorAll('#staffTableBody input[data-field], #staffTableBody select[data-field]').forEach(input => {
     const type = input.getAttribute('type');
 
     if (type === 'checkbox') {
       input.addEventListener('change', handleFieldChange);
     } else {
       input.addEventListener('input', handleFieldChange);
+      input.addEventListener('change', handleFieldChange);
     }
   });
 }
@@ -116,6 +145,8 @@ function handleFieldChange(event) {
 
   if (el.type === 'checkbox') {
     staffRows[index][field] = el.checked;
+  } else if (field === 'status') {
+    staffRows[index][field] = normalizeStatus(el.value);
   } else {
     staffRows[index][field] = el.value;
   }
@@ -153,7 +184,7 @@ async function saveRows() {
     naam: String(row.naam || '').trim(),
     rang: String(row.rang || '').trim(),
     afdeling: String(row.afdeling || '').trim(),
-    status: String(row.status || '').trim(),
+    status: normalizeStatus(row.status),
     is_active: !!row.is_active
   }));
 
@@ -203,10 +234,24 @@ function validateRows(rows) {
       return `Dubbel roepnummer gevonden: ${row.roepnummer}`;
     }
 
+    if (!STATUS_OPTIONS.includes(row.status)) {
+      return `Rij ${i + 1}: ongeldige status.`;
+    }
+
     seen.add(row.roepnummer);
   }
 
   return null;
+}
+
+function normalizeStatus(value) {
+  const status = String(value || '').trim().toLowerCase();
+
+  if (status === 'actief') return 'actief';
+  if (status === 'verlof') return 'verlof';
+  if (status === 'non actief' || status === 'non-actief' || status === 'nonactief') return 'non-actief';
+
+  return 'actief';
 }
 
 function showMessage(text, type = 'success') {
