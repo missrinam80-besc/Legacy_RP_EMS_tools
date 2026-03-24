@@ -28,6 +28,26 @@
 
     <div id="messageBox" class="message"></div>
 
+    <section class="card info-card">
+      <h2>Instructies voor beheerders</h2>
+      <p>
+        Gebruik deze tool om de personeelslijst van het ziekenhuis te beheren. Je kan bestaande medewerkers aanpassen
+        en nieuwe rijen toevoegen wanneer er iemand bijkomt.
+      </p>
+      <ul>
+        <li>Vul bovenaan je naam in. Die wordt gebruikt voor de logging in de Google Sheet.</li>
+        <li>Gebruik het zoekveld om snel een medewerker op te zoeken op roepnummer, naam, rang of afdeling.</li>
+        <li>Pas velden rechtstreeks aan in de tabel.</li>
+        <li>Gebruik bij <strong>status</strong> steeds de keuzelijst: <strong>actief</strong>, <strong>non-actief</strong> of <strong>verlof</strong>.</li>
+        <li>Vink <strong>zichtbaar</strong> aan als de medewerker moet getoond worden in de read-only lijst en in dropdowns van andere tools.</li>
+        <li>Klik na je wijzigingen altijd op <strong>Opslaan</strong>.</li>
+      </ul>
+      <p>
+        Medewerkers worden niet verwijderd via deze tool. Indien iemand niet meer zichtbaar mag zijn op de publieke of read-only lijst,
+        zet dan <strong>zichtbaar</strong> uit en pas indien nodig de status aan.
+      </p>
+    </section>
+
     <section class="card table-card">
       <div class="table-wrap">
         <table id="staffTable">
@@ -38,28 +58,17 @@
               <th>Rang</th>
               <th>Afdeling</th>
               <th>Status</th>
-              <th>Actief</th>
-              <th>Acties</th>
+              <th>Zichtbaar</th>
             </tr>
           </thead>
           <tbody id="staffTableBody"></tbody>
         </table>
       </div>
     </section>
-
-    <section class="card">
-      <h2>Opmerkingen</h2>
-      <ul>
-        <li>De read-only view toont enkel medewerkers waar <strong>Actief</strong> aangevinkt is.</li>
-        <li>De dropdown-endpoint gebruikt ook enkel actieve medewerkers.</li>
-        <li>Roepnummer moet uniek zijn.</li>
-        <li>Status kan enkel gekozen worden uit de vaste lijst.</li>
-      </ul>
-    </section>
   </div>
 
   <script>
-    const API_URL = 'https://script.google.com/macros/s/AKfycbw2kNYykn-uWDfNSlbIlmFaM65lhw3bb-AlEndYbqde9muCBhiPH8IaziM203GxArPTuQ/exec';
+    const API_URL = 'JOUW_APPS_SCRIPT_WEBAPP_URL';
   </script>
   <script src="assets/admin.js"></script>
 </body>
