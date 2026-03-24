@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EMS Personeelsbeheer</title>
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="page-header">
+      <h1>EMS Personeelsbeheer</h1>
+      <p>Beheer de personeelslijst van het ziekenhuis.</p>
+    </header>
+
+    <section class="toolbar card">
+      <div class="toolbar-left">
+        <input type="text" id="actorInput" placeholder="Jouw naam (voor logging)" />
+        <input type="text" id="searchInput" placeholder="Zoek op roepnummer, naam, rang, afdeling..." />
+      </div>
+
+      <div class="toolbar-right">
+        <button id="loadBtn" type="button">Laden</button>
+        <button id="addRowBtn" type="button">Rij toevoegen</button>
+        <button id="saveBtn" type="button" class="primary">Opslaan</button>
+      </div>
+    </section>
+
+    <section class="card table-card">
+      <div class="table-wrap">
+        <table id="staffTable">
+          <thead>
+            <tr>
+              <th>Roepnummer</th>
+              <th>Naam</th>
+              <th>Rang</th>
+              <th>Afdeling</th>
+              <th>Status</th>
+              <th>Actief</th>
+              <th>Acties</th>
+            </tr>
+          </thead>
+          <tbody id="staffTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Opmerkingen</h2>
+      <ul>
+        <li>De read-only view toont enkel medewerkers waar <strong>Actief</strong> aangevinkt is.</li>
+        <li>De dropdown-endpoint gebruikt ook enkel actieve medewerkers.</li>
+        <li>Roepnummer moet uniek zijn.</li>
+      </ul>
+    </section>
+
+    <div id="messageBox" class="message"></div>
+  </div>
+
+  <script>
+    const API_URL = 'https://script.google.com/macros/s/AKfycbw2kNYykn-uWDfNSlbIlmFaM65lhw3bb-AlEndYbqde9muCBhiPH8IaziM203GxArPTuQ/exec';
+  </script>
+  <script src="assets/admin.js"></script>
+</body>
+</html>
