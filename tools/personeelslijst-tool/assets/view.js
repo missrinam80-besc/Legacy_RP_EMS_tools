@@ -17,7 +17,7 @@ function bindEvents() {
 }
 
 async function loadRows() {
-  showMessage('Lijst laden...', 'success');
+  showMessage('Personeelslijst wordt geladen...', 'success');
 
   try {
     const response = await fetch(`${API_URL}?action=readonly`);
@@ -29,7 +29,7 @@ async function loadRows() {
 
     staffRows = Array.isArray(data.rows) ? data.rows : [];
     applyFilter();
-    showMessage('Personeelslijst geladen.', 'success');
+    showMessage('Personeelslijst is geladen.', 'success');
   } catch (err) {
     showMessage(err.message || 'Fout bij laden.', 'error');
   }
@@ -71,9 +71,19 @@ function renderTable() {
       <td>${escapeHtml(row.naam || '')}</td>
       <td>${escapeHtml(row.rang || '')}</td>
       <td>${escapeHtml(row.afdeling || '')}</td>
-      <td><span class="badge active">${escapeHtml(row.status || 'actief')}</span></td>
+      <td><span class="badge ${getStatusClass(row.status)}">${escapeHtml(row.status || '')}</span></td>
     </tr>
   `).join('');
+}
+
+function getStatusClass(status) {
+  const value = String(status || '').trim().toLowerCase();
+
+  if (value === 'actief') return 'status-actief';
+  if (value === 'non-actief' || value === 'non actief') return 'status-non-actief';
+  if (value === 'verlof') return 'status-verlof';
+
+  return 'status-default';
 }
 
 function showMessage(text, type = 'success') {
